@@ -3,7 +3,9 @@ package managerModel
 import (
 	"apiserver/model"
 	"github.com/spf13/viper"
+	"apiserver/requests/admin/manager/permissionRequests"
 	validator "gopkg.in/go-playground/validator.v9"
+	"fmt"
 )
 
 type PermissionModel struct {
@@ -34,12 +36,18 @@ func (p *PermissionModel) Create() error {
 
 //删除
 func DeletePermission(id uint64) error {
-	permission := PermissionModel{}
-	permission.BaseModel.Id = id
+	permissionModel := PermissionModel{}
+	permissionModel.BaseModel.Id = id
 	//Unscoped 方法是永久删除,因为数据表有delete_at字段,默认是软删除 用Unscoped永久删除
-	return model.DB.Self.Unscoped().Delete(&permission).Error
+	return model.DB.Self.Unscoped().Delete(&permissionModel).Error
 }
+
 //更新全部字段
-func (p *PermissionModel) Update() error {
+func (p *PermissionModel) UpdateAll() error {
 	return model.DB.Self.Save(p).Error
+}
+
+//修改指定字段
+func (p *PermissionModel) Update(data *permissionRequests.UpdateRequest) error {
+	return model.DB.Self.Model(p).Updates(data).Error
 }

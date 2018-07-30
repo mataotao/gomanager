@@ -1,4 +1,6 @@
-package permission
+package permissionRequests
+
+import "time"
 
 type CreateRequest struct {
 	Label         string `json:"label"`
@@ -11,4 +13,9 @@ type CreateRequest struct {
 
 type CreateResponse struct {
 	Label string `json:"label"`
+}
+
+type UpdateRequest struct {
+	Label     string `json:"label" valid:"required"`
+	UpdatedAt time.Time
 }

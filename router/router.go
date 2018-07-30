@@ -2,12 +2,10 @@ package router
 
 import (
 	"net/http"
-
 	"apiserver/handler/admin/manager/permission"
 	"apiserver/handler/admin/user"
 	"apiserver/handler/sd"
 	"apiserver/router/middleware"
-
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 )
@@ -50,9 +48,9 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		//新增权限
 		admin.POST("manager/permission", permission.Create)
 		//删除权限
-		admin.DELETE("manager/permission/:id",permission.Delete)
+		admin.DELETE("manager/permission/:id", permission.Delete)
 		//修改权限
-		admin.PUT("manager/permission/:id",permission.Update)
+		admin.PUT("manager/permission/:id", permission.Update)
 	}
 
 	/////////////////////////////////////////////////////后台 start///////////////////////////////////////////////////////////////////////////
