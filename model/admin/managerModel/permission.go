@@ -5,7 +5,6 @@ import (
 	"github.com/spf13/viper"
 	"apiserver/requests/admin/manager/permissionRequests"
 	validator "gopkg.in/go-playground/validator.v9"
-	"fmt"
 )
 
 type PermissionModel struct {
