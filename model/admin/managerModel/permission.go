@@ -50,3 +50,10 @@ func (p *PermissionModel) UpdateAll() error {
 func (p *PermissionModel) Update(data *permissionRequests.UpdateRequest) error {
 	return model.DB.Self.Model(p).Updates(data).Error
 }
+
+//查询一条数据
+func GetPermission(id uint64) (*PermissionModel, error) {
+	p := &PermissionModel{}
+	d := model.DB.Self.Where("id = ?", id).First(&p)
+	return p, d.Error
+}

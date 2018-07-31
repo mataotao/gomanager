@@ -51,6 +51,10 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		admin.DELETE("manager/permission/:id", permission.Delete)
 		//修改权限
 		admin.PUT("manager/permission/:id", permission.Update)
+		//获取一条
+		admin.GET("manager/permission/:id",permission.Get)
+
+
 	}
 
 	/////////////////////////////////////////////////////后台 start///////////////////////////////////////////////////////////////////////////
