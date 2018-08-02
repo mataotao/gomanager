@@ -61,26 +61,32 @@ func GetPermission(id uint64) (*PermissionModel, error) {
 }
 
 func ListPermission(limit uint64, page uint64) ([]*PermissionModel, uint64, error) {
+	//默认值
 	if limit == 0 {
 		limit = constvar.DefaultLimit
 	}
+	//默认值
 	if page == 0 {
 		page = constvar.DefaultPage
 	}
+	//计算开始偏移量
 	start := (page - 1) * limit
+	//用map装数据
 	permissionList := make([] *PermissionModel, 0)
+	//总条数
 	var total uint64
-
+	//查询总条数
 	if err := model.DB.Self.Model(&PermissionModel{}).Count(&total).Error; err != nil {
 		return permissionList, total, err
 	}
 
+	//查询数据
 	if err := model.DB.Self.Offset(start).Limit(limit).Order("id desc").Find(&permissionList).Error; err != nil {
 		return permissionList, total, err
 	}
 	return permissionList, total, nil
 }
-
+//Lock锁 IdMap id为建  sync.Mutex 是因为在并发处理中，更新同一个变量为了保证数据一致性
 type PermissionListLock struct {
 	Lock  *sync.Mutex
 	IdMap map[uint64]*PermissionListInfo

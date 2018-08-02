@@ -9,12 +9,11 @@ import (
 
 func List(c *gin.Context) {
 	var p permissionRequests.ListRequest
-
+	//绑定数据
 	if err := c.Bind(&p); err != nil {
 		handler.SendResponse(c, err, nil)
 		return
 	}
-
 	infos, total, err := permissionService.PermissionList(p.Limit, p.Page)
 	if err != nil {
 		handler.SendResponse(c, err, nil)
