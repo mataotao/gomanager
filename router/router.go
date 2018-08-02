@@ -52,9 +52,9 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		//修改权限
 		admin.PUT("manager/permission/:id", permission.Update)
 		//获取一条
-		admin.GET("manager/permission/:id",permission.Get)
-
-
+		admin.GET("manager/permission/:id", permission.Get)
+		//获取权限列表
+		admin.GET("manager/permission", permission.List)
 	}
 
 	/////////////////////////////////////////////////////后台 start///////////////////////////////////////////////////////////////////////////

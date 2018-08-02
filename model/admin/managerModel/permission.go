@@ -5,6 +5,8 @@ import (
 	"github.com/spf13/viper"
 	"apiserver/requests/admin/manager/permissionRequests"
 	validator "gopkg.in/go-playground/validator.v9"
+	"apiserver/pkg/constvar"
+	"sync"
 )
 
 type PermissionModel struct {
@@ -56,4 +58,43 @@ func GetPermission(id uint64) (*PermissionModel, error) {
 	p := &PermissionModel{}
 	d := model.DB.Self.Where("id = ?", id).First(&p)
 	return p, d.Error
+}
+
+func ListPermission(limit uint64, page uint64) ([]*PermissionModel, uint64, error) {
+	if limit == 0 {
+		limit = constvar.DefaultLimit
+	}
+	if page == 0 {
+		page = constvar.DefaultPage
+	}
+	start := (page - 1) * limit
+	permissionList := make([] *PermissionModel, 0)
+	var total uint64
+
+	if err := model.DB.Self.Model(&PermissionModel{}).Count(&total).Error; err != nil {
+		return permissionList, total, err
+	}
+
+	if err := model.DB.Self.Offset(start).Limit(limit).Order("id desc").Find(&permissionList).Error; err != nil {
+		return permissionList, total, err
+	}
+	return permissionList, total, nil
+}
+
+type PermissionListLock struct {
+	Lock  *sync.Mutex
+	IdMap map[uint64]*PermissionListInfo
+}
+
+type PermissionListInfo struct {
+	Id            uint64 `json:"id"`
+	Label         string `json:"label" `
+	IsContainMenu uint8  `json:"is_contain_menu" `
+	Pid           uint8  `json:"pid" `
+	Level         uint8  `json:"level" `
+	Url           string `json:"url" `
+	Sort          uint64 `json:"sort" `
+	CreatedAt     string `json:"createdAt"`
+	UpdatedAt     string `json:"updatedAt"`
+	SayHello      string `json:"sayHello"`
 }
