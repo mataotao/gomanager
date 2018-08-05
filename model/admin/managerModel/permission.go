@@ -5,15 +5,13 @@ import (
 	"github.com/spf13/viper"
 	"apiserver/requests/admin/manager/permissionRequests"
 	validator "gopkg.in/go-playground/validator.v9"
-	"apiserver/pkg/constvar"
-	"sync"
 )
 
 type PermissionModel struct {
 	model.BaseModel
 	Label         string `json:"label" gorm:"column:label;not null" binding:"required" validate:"min=1,max=32"`
-	IsContainMenu uint8  `json:"is_contain_menu" gorm:"column:is_contain_menu;not null" binding:"required" validate:"min=1,max=32"`
-	Pid           uint8  `json:"pid" gorm:"column:pid;not null" `
+	IsContainMenu uint8  `json:"is_contain_menu" gorm:"column:is_contain_menu;not null" binding:"required"`
+	Pid           uint64 `json:"pid" gorm:"column:pid;not null" `
 	Level         uint8  `json:"level" gorm:"column:level;not null" binding:"required" validate:"required"`
 	Url           string `json:"url" gorm:"column:url"`
 	Sort          uint64 `json:"sort" gorm:"column:sort;default:'500'"`
@@ -60,47 +58,25 @@ func GetPermission(id uint64) (*PermissionModel, error) {
 	return p, d.Error
 }
 
-func ListPermission(limit uint64, page uint64) ([]*PermissionModel, uint64, error) {
-	//默认值
-	if limit == 0 {
-		limit = constvar.DefaultLimit
-	}
-	//默认值
-	if page == 0 {
-		page = constvar.DefaultPage
-	}
-	//计算开始偏移量
-	start := (page - 1) * limit
+func ListPermission() ([]*PermissionModel, error) {
 	//用map装数据
 	permissionList := make([] *PermissionModel, 0)
-	//总条数
-	var total uint64
-	//查询总条数
-	if err := model.DB.Self.Model(&PermissionModel{}).Count(&total).Error; err != nil {
-		return permissionList, total, err
-	}
-
 	//查询数据
-	if err := model.DB.Self.Offset(start).Limit(limit).Order("id desc").Find(&permissionList).Error; err != nil {
-		return permissionList, total, err
+	if err := model.DB.Self.Order("pid asc,sort desc,id asc").Find(&permissionList).Error; err != nil {
+		return permissionList, err
 	}
-	return permissionList, total, nil
-}
-//Lock锁 IdMap id为建  sync.Mutex 是因为在并发处理中，更新同一个变量为了保证数据一致性
-type PermissionListLock struct {
-	Lock  *sync.Mutex
-	IdMap map[uint64]*PermissionListInfo
+	return permissionList, nil
 }
 
 type PermissionListInfo struct {
-	Id            uint64 `json:"id"`
-	Label         string `json:"label" `
-	IsContainMenu uint8  `json:"is_contain_menu" `
-	Pid           uint8  `json:"pid" `
-	Level         uint8  `json:"level" `
-	Url           string `json:"url" `
-	Sort          uint64 `json:"sort" `
-	CreatedAt     string `json:"createdAt"`
-	UpdatedAt     string `json:"updatedAt"`
-	SayHello      string `json:"sayHello"`
+	Id            uint64               `json:"id"`
+	Label         string               `json:"label" `
+	IsContainMenu uint8                `json:"is_contain_menu" `
+	Pid           uint64               `json:"pid" `
+	Level         uint8                `json:"level" `
+	Url           string               `json:"url" `
+	Sort          uint64               `json:"sort" `
+	CreatedAt     string               `json:"created_at"`
+	UpdatedAt     string               `json:"updated_at"`
+	Children      []PermissionListInfo `json:"children"`
 }

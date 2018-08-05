@@ -7,7 +7,7 @@ import (
 type CreateRequest struct {
 	Label         string `json:"label"`
 	IsContainMenu uint8  `json:"is_contain_menu"`
-	Pid           uint8  `json:"pid"`
+	Pid           uint64 `json:"pid"`
 	Url           string `json:"url"`
 	Level         uint8  `json:"level"`
 	Sort          uint64 `json:"sort"`
@@ -18,11 +18,9 @@ type CreateResponse struct {
 }
 
 type UpdateRequest struct {
-	Label     string `json:"label" valid:"required"`
-	UpdatedAt time.Time
-}
-
-type ListRequest struct {
-	Limit uint64 `json:"limit"`
-	Page  uint64 `json:"page"`
+	Label         string `json:"label" valid:"required"`
+	Sort          uint64 `json:"sort"`
+	IsContainMenu uint8  `json:"is_contain_menu"`
+	Url           string `json:"url"`
+	UpdatedAt     time.Time
 }
