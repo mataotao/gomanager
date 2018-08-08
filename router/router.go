@@ -3,6 +3,7 @@ package router
 import (
 	"net/http"
 	"apiserver/handler/admin/manager/permission"
+	"apiserver/handler/admin/manager/role"
 	"apiserver/handler/admin/user"
 	"apiserver/handler/sd"
 	"apiserver/router/middleware"
@@ -45,6 +46,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	admin.Use(middleware.AuthMiddleware())
 	{
 		//manager module
+		////////////////////权限
 		//新增权限
 		admin.POST("manager/permission", permission.Create)
 		//删除权限
@@ -55,6 +57,9 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		admin.GET("manager/permission/:id", permission.Get)
 		//获取权限列表
 		admin.GET("manager/permission", permission.List)
+		////////////////////角色
+		//新增角色
+		admin.POST("manager/role", role.Create)
 	}
 
 	/////////////////////////////////////////////////////后台 start///////////////////////////////////////////////////////////////////////////
