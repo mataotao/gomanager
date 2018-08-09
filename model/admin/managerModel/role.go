@@ -5,6 +5,7 @@ import (
 	"apiserver/model"
 	"bytes"
 	"strconv"
+	globalModel "apiserver/pkg/global/model"
 )
 
 type RoleModel struct {
@@ -65,4 +66,32 @@ func (r *RoleModel) Delete() error {
 	}
 	tx.Commit()
 	return nil
+}
+
+func (r *RoleModel) Update(data *RoleModel, p []int) error {
+	tx := model.DB.Self.Begin()
+	if err := tx.Model(&r).Updates(data).Error; err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	if err := tx.Where("role_id = ?", r.Id).Delete(RolePermissionModel{}).Error; err != nil {
+		tx.Rollback()
+		return err
+	}
+	var rpm RolePermissionModel
+	field := []string{"`role_id`", "`permission_id`"}
+	roleData := make([][]int, len(p))
+	id := int(r.Id)
+	for i, v := range p {
+		t := []int{id, v}
+		roleData[i] = t
+	}
+	sql := globalModel.MultiInsertIntSql(rpm.TableName(), field, roleData)
+	if err := tx.Exec(sql).Error; err != nil {
+		return err
+	}
+	tx.Commit()
+	return nil
+
 }
