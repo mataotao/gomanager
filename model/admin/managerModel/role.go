@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"strconv"
 	globalModel "apiserver/pkg/global/model"
+	"fmt"
 )
 
 type RoleModel struct {
@@ -94,4 +95,31 @@ func (r *RoleModel) Update(data *RoleModel, p []int) error {
 	tx.Commit()
 	return nil
 
+}
+
+func (r *RoleModel) Get() (InfoResponse, error) {
+	info := make([]info, 0)
+	err := model.DB.Self.Table("manager_role as r").Select("r.name, r.description,rp.permission_id").Joins("LEFT JOIN manager_role_permission rp ON rp.role_id=r.id").Where("r.id = ?", r.Id).Scan(&info)
+	var ir InfoResponse
+	ir.Name = info[0].Name
+	ir.Description = info[0].Description
+	ir.Id = r.Id
+	for _, v := range info {
+		ir.Permission = append(ir.Permission,v.PermissionId)
+	}
+	fmt.Println(ir.Permission)
+	return ir, err.Error
+}
+
+type info struct {
+	Name         string `json:"name"`
+	Description  string `json:"description"`
+	PermissionId int    `json:"permission_id"`
+}
+
+type InfoResponse struct {
+	Id          uint64    `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Permission  []int  `json:"permission"`
 }

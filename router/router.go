@@ -64,6 +64,8 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		admin.DELETE("manager/role/:id", role.Delete)
 		//修改角色
 		admin.PUT("manager/role/:id", role.Update)
+		//获取角色信息
+		admin.GET("manager/role/:id", role.Get)
 	}
 
 	/////////////////////////////////////////////////////后台 start///////////////////////////////////////////////////////////////////////////
