@@ -3,11 +3,11 @@ package role
 import (
 	"apiserver/handler"
 	"apiserver/model/admin/managerModel"
-	//"apiserver/util"
+	"apiserver/util"
 	"github.com/gin-gonic/gin"
 	"github.com/asaskevich/govalidator"
-	//"github.com/lexkong/log"
-	//"github.com/lexkong/log/lager"
+	"github.com/lexkong/log"
+	"github.com/lexkong/log/lager"
 )
 
 func Create(c *gin.Context) {
@@ -28,6 +28,8 @@ func Create(c *gin.Context) {
 		handler.SendResponse(c, err, nil)
 		return
 	}
+	//写入日志
+	log.Info("创建角色", lager.Data{"X-Request-Id": util.GetReqID(c)})
 	handler.SendResponse(c, nil, nil)
 }
 
