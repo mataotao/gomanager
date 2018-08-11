@@ -1,6 +1,6 @@
 package constvar
 
 const (
-	DefaultLimit = 50
+	DefaultLimit = 10
 	DefaultPage  = 1
 )

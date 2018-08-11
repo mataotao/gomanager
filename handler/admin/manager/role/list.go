@@ -3,6 +3,7 @@ package role
 import (
 	"apiserver/handler"
 	"apiserver/model/admin/managerModel"
+	"apiserver/service/admin/manager/roleService"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,10 +15,7 @@ func List(c *gin.Context) {
 		return
 	}
 
-	roleModel := managerModel.RoleModel{
-		Name: r.Name,
-	}
-	list, count, err := roleModel.List(r.Page, r.Limit)
+	list, count, err := roleService.List(r.Name, r.Page, r.Limit)
 
 	if err != nil {
 		handler.SendResponse(c, err, nil)
@@ -35,6 +33,6 @@ type listRequest struct {
 }
 
 type listResponse struct {
-	Count uint64                    `json:"count"`
-	List  []*managerModel.RoleModel `json:"list"`
+	Count uint64                       `json:"count"`
+	List  []*managerModel.RoleListInfo `json:"list"`
 }

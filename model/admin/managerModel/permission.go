@@ -59,7 +59,6 @@ func GetPermission(id uint64) (*PermissionModel, error) {
 }
 
 func ListPermission() ([]*PermissionModel, error) {
-	//用map装数据
 	permissionList := make([] *PermissionModel, 0)
 	//查询数据
 	if err := model.DB.Self.Order("pid asc,sort desc,id asc").Find(&permissionList).Error; err != nil {

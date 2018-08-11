@@ -8,6 +8,7 @@ import (
 	globalModel "apiserver/pkg/global/model"
 	"apiserver/pkg/constvar"
 	"fmt"
+	"sync"
 )
 
 type RoleModel struct {
@@ -145,4 +146,16 @@ type InfoResponse struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Permission  []int  `json:"permission"`
+}
+
+type RoleList struct {
+	Lock  *sync.Mutex
+	IdMap map[uint64]*RoleListInfo
+}
+
+type RoleListInfo struct {
+	Id          uint64 `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	CreatedAt   string `json:"created_at"`
 }
