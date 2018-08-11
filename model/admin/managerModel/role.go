@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"strconv"
 	globalModel "apiserver/pkg/global/model"
+	"apiserver/pkg/constvar"
 	"fmt"
 )
 
@@ -105,10 +106,32 @@ func (r *RoleModel) Get() (InfoResponse, error) {
 	ir.Description = info[0].Description
 	ir.Id = r.Id
 	for _, v := range info {
-		ir.Permission = append(ir.Permission,v.PermissionId)
+		ir.Permission = append(ir.Permission, v.PermissionId)
 	}
-	fmt.Println(ir.Permission)
 	return ir, err.Error
+}
+
+func (r *RoleModel) List(page uint64, limit uint64) ([]*RoleModel, uint64, error) {
+	if limit == 0 {
+		limit = constvar.DefaultLimit
+	}
+	if page == 0 {
+		page = constvar.DefaultPage
+	}
+	start := (page - 1) * limit
+	var count uint64
+	list := make([]*RoleModel, 0)
+	where := fmt.Sprintf("name like '%%%s%%'", r.Name)
+
+	if err := model.DB.Self.Model(&RoleModel{}).Where(where).Count(&count).Error; err != nil {
+		return list, count, err
+	}
+
+	if err := model.DB.Self.Model(&RoleModel{}).Where(where).Offset(start).Limit(limit).Order("id desc").Find(&list).Error; err != nil {
+		return list, count, err
+	}
+	return list, count, nil
+
 }
 
 type info struct {
@@ -118,7 +141,7 @@ type info struct {
 }
 
 type InfoResponse struct {
-	Id          uint64    `json:"id"`
+	Id          uint64 `json:"id"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Permission  []int  `json:"permission"`

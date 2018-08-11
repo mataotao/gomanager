@@ -66,6 +66,8 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		admin.PUT("manager/role/:id", role.Update)
 		//获取角色信息
 		admin.GET("manager/role/:id", role.Get)
+		//获取角色列表
+		admin.GET("manager/role", role.List)
 	}
 
 	/////////////////////////////////////////////////////后台 start///////////////////////////////////////////////////////////////////////////
