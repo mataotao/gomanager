@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"apiserver/handler/admin/manager/permission"
 	"apiserver/handler/admin/manager/role"
-	"apiserver/handler/admin/user"
+	"apiserver/handler/admin/manager/user"
 	"apiserver/handler/sd"
 	"apiserver/router/middleware"
 	"github.com/gin-contrib/pprof"
@@ -28,25 +28,25 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	pprof.Register(g)
 
 	// api for authentication functionalities
-	g.POST("/login", user.Login)
+	//g.POST("/login", user.Login)
 
 	// The user handlers, requiring authentication
-	u := g.Group("/user")
-	u.Use(middleware.AuthMiddleware())
-	{
-		u.POST("", user.Create)
-		u.DELETE("/:id", user.Delete)
-		u.PUT("/:id", user.Update)
-		u.GET("", user.List)
-		u.GET("/:username", user.Get)
-	}
+	//u := g.Group("/user")
+	//u.Use(middleware.AuthMiddleware())
+	//{
+	//	u.POST("", user.Create)
+	//	u.DELETE("/:id", user.Delete)
+	//	u.PUT("/:id", user.Update)
+	//	u.GET("", user.List)
+	//	u.GET("/:username", user.Get)
+	//}
 	/////////////////////////////////////////////////////后台 start///////////////////////////////////////////////////////////////////////////
 
 	admin := g.Group("/admin/")
 	admin.Use(middleware.AuthMiddleware())
 	{
 		//manager module
-		////////////////////权限
+		//----------------------------权限----------------------------------------------------------
 		//新增权限
 		admin.POST("manager/permission", permission.Create)
 		//删除权限
@@ -57,7 +57,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		admin.GET("manager/permission/:id", permission.Get)
 		//获取权限列表
 		admin.GET("manager/permission", permission.List)
-		////////////////////角色
+		//----------------------------角色----------------------------------------------------------
 		//新增角色
 		admin.POST("manager/role", role.Create)
 		//删除角色
@@ -68,6 +68,9 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		admin.GET("manager/role/:id", role.Get)
 		//获取角色列表
 		admin.GET("manager/role", role.List)
+		//----------------------------管理员----------------------------------------------------------
+		//新增角色
+		admin.POST("manager/user", user.Create)
 	}
 
 	/////////////////////////////////////////////////////后台 start///////////////////////////////////////////////////////////////////////////

@@ -16,7 +16,7 @@ func Create(c *gin.Context) {
 		handler.SendResponse(c, err, nil)
 		return
 	}
-	if _, err := govalidator.ValidateStruct(r); err != nil {
+	if _, err := govalidator.ValidateStruct(&r); err != nil {
 		handler.SendResponse(c, err, nil)
 		return
 	}

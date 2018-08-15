@@ -26,7 +26,7 @@ func Update(c *gin.Context) {
 		return
 	}
 	//验证参数是否合法
-	if _, err := govalidator.ValidateStruct(updateRequest); err != nil {
+	if _, err := govalidator.ValidateStruct(&updateRequest); err != nil {
 		handler.SendResponse(c, err, nil)
 		return
 	}
