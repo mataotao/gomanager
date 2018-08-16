@@ -29,6 +29,7 @@ func Create(c *gin.Context) {
 		HeadImg:  r.HeadImg,
 		LastTime: time.Now().Format("2006-01-02 15:04:05"),
 		LastIp:   c.ClientIP(),
+		Status:   managerModel.ON,
 	}
 
 	if isUnique := user.Uinque(); isUnique == false {
@@ -41,12 +42,11 @@ func Create(c *gin.Context) {
 		return
 	}
 
-	if err:=user.Create(r.Roles);err!=nil{
+	if err := user.Create(r.Roles); err != nil {
 		handler.SendResponse(c, err, nil)
 		return
 	}
 
 	handler.SendResponse(c, nil, nil)
-
 
 }

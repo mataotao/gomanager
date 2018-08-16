@@ -8,3 +8,7 @@ type CreateRequest struct {
 	HeadImg  string   `json:"head_img"`
 	Roles    []uint64 `json:"roles" valid:"required"`
 }
+
+type FreezeRequest struct {
+	Status uint8 `json:"status" valid:"required,length(1|1),numeric"`
+}

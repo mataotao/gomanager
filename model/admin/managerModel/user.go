@@ -7,6 +7,10 @@ import (
 	globalModel "apiserver/pkg/global/model"
 )
 
+const (
+	ON uint8 = 1
+)
+
 type UserModel struct {
 	model.BaseModel
 	Username string `json:"username"`
@@ -55,6 +59,10 @@ func (u *UserModel) Create(roleIds []uint64) error {
 	tx.Commit()
 	return nil
 
+}
+
+func (u *UserModel) Freeze(data *UserModel) error {
+	return model.DB.Self.Model(&u).Updates(data).Error
 }
 func (u *UserModel) Encrypt() (err error) {
 	u.Password, err = auth.Encrypt(u.Password)
