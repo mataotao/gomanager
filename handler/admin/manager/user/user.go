@@ -12,3 +12,7 @@ type CreateRequest struct {
 type FreezeRequest struct {
 	Status uint8 `json:"status" valid:"required,length(1|1),numeric"`
 }
+
+type PwdRequest struct {
+	Password string `json:"password" valid:"required,length(6|30)"`
+}

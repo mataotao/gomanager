@@ -61,8 +61,8 @@ func (u *UserModel) Create(roleIds []uint64) error {
 
 }
 
-func (u *UserModel) Freeze(data *UserModel) error {
-	return model.DB.Self.Model(&u).Updates(data).Error
+func (u *UserModel) Update() error {
+	return model.DB.Self.Model(&u).Updates(u).Error
 }
 func (u *UserModel) Encrypt() (err error) {
 	u.Password, err = auth.Encrypt(u.Password)

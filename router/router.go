@@ -73,6 +73,8 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		admin.POST("manager/user", user.Create)
 		//冻结角色
 		admin.PUT("manager/user/freeze/:id",user.Freeze)
+		//修改密码
+		admin.PUT("manager/user/pwd/:id",user.Pwd)
 	}
 
 	/////////////////////////////////////////////////////后台 start///////////////////////////////////////////////////////////////////////////
