@@ -69,12 +69,14 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		//获取角色列表
 		admin.GET("manager/role", role.List)
 		//----------------------------管理员----------------------------------------------------------
-		//新增角色
+		//新增管理员
 		admin.POST("manager/user", user.Create)
-		//冻结角色
-		admin.PUT("manager/user/freeze/:id",user.Freeze)
+		//冻结管理员
+		admin.PUT("manager/user-freeze/:id",user.Freeze)
 		//修改密码
-		admin.PUT("manager/user/pwd/:id",user.Pwd)
+		admin.PUT("manager/user-pwd/:id",user.Pwd)
+		//更新管理员
+		admin.PUT("manager/user/:id",user.Update)
 	}
 
 	/////////////////////////////////////////////////////后台 start///////////////////////////////////////////////////////////////////////////

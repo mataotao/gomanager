@@ -49,7 +49,7 @@ func (u *UserModel) Create(roleIds []uint64) error {
 		t := []int{int(u.Id), int(v)}
 		roleData[i] = t
 	}
-	field := []string{"member_id", "role_id"}
+	field := []string{"user_id", "role_id"}
 	var urm UserRoleModel
 	sql := globalModel.MultiInsertIntSql(urm.TableName(), field, roleData)
 	if err := tx.Exec(sql).Error; err != nil {
@@ -63,6 +63,34 @@ func (u *UserModel) Create(roleIds []uint64) error {
 
 func (u *UserModel) Update() error {
 	return model.DB.Self.Model(&u).Updates(u).Error
+}
+
+func (u *UserModel) Updates(roles []uint64) error {
+	tx := model.DB.Self.Begin()
+	if err := tx.Model(&u).Updates(u).Error; err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	if err:=tx.Where("user_id = ?",u.Id).Delete(UserRoleModel{}).Error;err!=nil{
+		return err
+	}
+	roleData := make([][]int, len(roles))
+	for i, v := range roles {
+		t := []int{int(u.Id), int(v)}
+		roleData[i] = t
+	}
+	var urm UserRoleModel
+	field := []string{"user_id", "role_id"}
+	sql := globalModel.MultiInsertIntSql(urm.TableName(), field, roleData)
+
+	if err := tx.Exec(sql).Error; err != nil {
+		tx.Rollback()
+		return err
+	}
+	tx.Commit()
+	return nil
+
 }
 func (u *UserModel) Encrypt() (err error) {
 	u.Password, err = auth.Encrypt(u.Password)

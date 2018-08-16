@@ -16,3 +16,10 @@ type FreezeRequest struct {
 type PwdRequest struct {
 	Password string `json:"password" valid:"required,length(6|30)"`
 }
+
+type UpdateRequest struct {
+	Name    string   `json:"name" valid:"required"`
+	Mobile  uint64   `json:"mobile" valid:"required,length(11|11),numeric"`
+	HeadImg string   `json:"head_img"`
+	Roles   []uint64 `json:"roles" valid:"required"`
+}
