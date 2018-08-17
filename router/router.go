@@ -77,6 +77,8 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		admin.PUT("manager/user-pwd/:id",user.Pwd)
 		//更新管理员
 		admin.PUT("manager/user/:id",user.Update)
+		//获取管理员信息
+		admin.GET("manager/user/:id",user.Get)
 	}
 
 	/////////////////////////////////////////////////////后台 start///////////////////////////////////////////////////////////////////////////

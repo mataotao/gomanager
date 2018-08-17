@@ -5,6 +5,8 @@ import (
 	"apiserver/model"
 	"github.com/spf13/viper"
 	globalModel "apiserver/pkg/global/model"
+	"sync"
+	"runtime"
 )
 
 const (
@@ -72,7 +74,7 @@ func (u *UserModel) Updates(roles []uint64) error {
 		return err
 	}
 
-	if err:=tx.Where("user_id = ?",u.Id).Delete(UserRoleModel{}).Error;err!=nil{
+	if err := tx.Where("user_id = ?", u.Id).Delete(UserRoleModel{}).Error; err != nil {
 		return err
 	}
 	roleData := make([][]int, len(roles))
@@ -92,7 +94,55 @@ func (u *UserModel) Updates(roles []uint64) error {
 	return nil
 
 }
+
+func (u *UserModel) Get() (*userInfo, error) {
+	runtime.GOMAXPROCS(runtime.NumCPU())
+	wg := sync.WaitGroup{}
+	wg.Add(2)
+	finished := make(chan bool, 1)
+	errChan := make(chan error, 1)
+	go func(id uint64) {
+		defer wg.Done()
+		if err := model.DB.Self.First(&u, id).Error; err != nil {
+			errChan <- err
+		}
+	}(u.Id)
+	var ur []UserRoleModel
+	go func(id uint64) {
+		defer wg.Done()
+		if err := model.DB.Self.Where("user_id = ? ", id).Find(&ur).Error; err != nil {
+			errChan <- err
+		}
+	}(u.Id)
+
+	go func() {
+		wg.Wait()
+		close(finished)
+	}()
+	select {
+	case <-finished:
+	case err := <-errChan:
+		return nil, err
+	}
+	info := &userInfo{
+		Username: u.Username,
+		Name:     u.Name,
+		Mobile:   u.Mobile,
+		HeadImg:  u.HeadImg,
+		Roles:    ur,
+	}
+	return info, nil
+}
+
 func (u *UserModel) Encrypt() (err error) {
 	u.Password, err = auth.Encrypt(u.Password)
 	return
+}
+
+type userInfo struct {
+	Username string          `json:"username"`
+	Name     string          `json:"name"`
+	Mobile   uint64          `json:"mobile"`
+	HeadImg  string          `json:"head_img"`
+	Roles    []UserRoleModel `json:"roles"`
 }

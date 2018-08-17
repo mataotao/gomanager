@@ -7,8 +7,8 @@ import (
 
 type UserRoleModel struct {
 	model.BaseModel
-	MemberId uint64 `json:"member_id"`
-	RoleId   uint64 `json:"name"`
+	UserId uint64 `json:"user_id"`
+	RoleId   uint64 `json:"role_id"`
 }
 
 func (u *UserRoleModel) TableName() string {
