@@ -7,6 +7,7 @@ import (
 	globalModel "apiserver/pkg/global/model"
 	"sync"
 	"runtime"
+	"time"
 )
 
 const (
@@ -15,15 +16,15 @@ const (
 
 type UserModel struct {
 	model.BaseModel
-	Username string `json:"username"`
-	Name     string `json:"name"`
-	Mobile   uint64 `json:"mobile"`
-	Password string `json:"password"`
-	HeadImg  string `json:"head_img"`
-	LastTime string `json:"last_time"`
-	LastIp   string `json:"last_ip"`
-	IsRoot   uint8  `json:"is_root"`
-	Status   uint8  `json:"status"`
+	Username string    `json:"username"`
+	Name     string    `json:"name"`
+	Mobile   uint64    `json:"mobile"`
+	Password string    `json:"password"`
+	HeadImg  string    `json:"head_img"`
+	LastTime time.Time `json:"last_time"`
+	LastIp   string    `json:"last_ip"`
+	IsRoot   uint8     `json:"is_root"`
+	Status   uint8     `json:"status"`
 }
 
 func (u *UserModel) TableName() string {
@@ -139,10 +140,77 @@ func (u *UserModel) Encrypt() (err error) {
 	return
 }
 
+func (u *UserModel) List(page, limit, roleId uint64) ([]*UserModel, map[uint64][]uint64, uint64, error) {
+	var count uint64
+
+	DB := model.DB.Self.Table(u.TableName())
+	if u.Name != "" {
+		DB = DB.Where("name = ?", u.Name)
+	}
+	if u.Username != "" {
+		DB = DB.Where("username = ?", u.Username)
+	}
+	if u.Status != 0 {
+		DB = DB.Where("status = ?", u.Status)
+	}
+	if roleId != 0 {
+		var userIds []UserRoleModel
+		if err := model.DB.Self.Where("role_id = ? ", roleId).Find(&userIds).Error; err != nil {
+			return nil, nil, count, err
+		}
+		if len(userIds) > 0 {
+			uIds := make([]uint64, len(userIds))
+			for i, v := range userIds {
+				uIds[i] = v.UserId
+			}
+			DB = DB.Where("id in (?)", uIds)
+		}
+	}
+
+	var userInfoList []*UserModel
+	if err := DB.Count(&count).Find(&userInfoList).Error; err != nil {
+		return nil, nil, count, err
+	}
+
+	currentUIds := make([]uint64, len(userInfoList))
+
+	for i, v := range userInfoList {
+		currentUIds[i] = v.Id
+	}
+	var userRole []UserRoleModel
+
+	if err := model.DB.Self.Model(&UserRoleModel{}).Where("user_id in (?)", currentUIds).Find(&userRole).Error; err != nil {
+		return nil, nil, count, err
+	}
+	userRoleIds := make(map[uint64][]uint64, 0)
+	for _, v := range userRole {
+		userRoleIds[v.UserId] = append(userRoleIds[v.UserId], v.RoleId)
+	}
+	return userInfoList, userRoleIds, count, nil
+}
+
 type userInfo struct {
 	Username string          `json:"username"`
 	Name     string          `json:"name"`
 	Mobile   uint64          `json:"mobile"`
 	HeadImg  string          `json:"head_img"`
 	Roles    []UserRoleModel `json:"roles"`
+}
+
+type UserListInfo struct {
+	Id       uint64 `json:"id"`
+	Username string `json:"username"`
+	Name     string `json:"name"`
+	Mobile   uint64 `json:"mobile"`
+	HeadImg  string `json:"head_img"`
+	LastTime string `json:"last_time"`
+	LastIp   string `json:"last_ip"`
+	IsRoot   uint8  `json:"is_root"`
+	Status   uint8  `json:"status"`
+	RoleName string `json:"role_name"`
+}
+
+type UserList struct {
+	Lock  *sync.Mutex
+	IdMap map[uint64]*UserListInfo
 }

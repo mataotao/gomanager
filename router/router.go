@@ -72,13 +72,15 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		//新增管理员
 		admin.POST("manager/user", user.Create)
 		//冻结管理员
-		admin.PUT("manager/user-freeze/:id",user.Freeze)
+		admin.PUT("manager/user-freeze/:id", user.Freeze)
 		//修改密码
-		admin.PUT("manager/user-pwd/:id",user.Pwd)
+		admin.PUT("manager/user-pwd/:id", user.Pwd)
 		//更新管理员
-		admin.PUT("manager/user/:id",user.Update)
+		admin.PUT("manager/user/:id", user.Update)
 		//获取管理员信息
-		admin.GET("manager/user/:id",user.Get)
+		admin.GET("manager/user/:id", user.Get)
+		//获取管理员列表
+		admin.GET("manager/user", user.List)
 	}
 
 	/////////////////////////////////////////////////////后台 start///////////////////////////////////////////////////////////////////////////

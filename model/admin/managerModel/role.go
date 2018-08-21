@@ -135,6 +135,14 @@ func (r *RoleModel) List(page uint64, limit uint64) ([]*RoleModel, uint64, error
 
 }
 
+func (r *RoleModel) All() ([]*RoleModel, error) {
+	roleList := make([]*RoleModel, 0)
+	if err := model.DB.Self.Find(&roleList).Error; err != nil {
+		return roleList, err
+	}
+	return roleList, nil
+}
+
 type info struct {
 	Name         string `json:"name"`
 	Description  string `json:"description"`

@@ -23,3 +23,12 @@ type UpdateRequest struct {
 	HeadImg string   `json:"head_img"`
 	Roles   []uint64 `json:"roles" valid:"required"`
 }
+
+type ListRequest struct {
+	Page     uint64 `json:"page"`
+	Limit    uint64 `json:"limit"`
+	Username string `json:"username"`
+	Name     string `json:"name"`
+	Status   uint8  `json:"name"`
+	RoleId   uint64 `json:"role_id"`
+}

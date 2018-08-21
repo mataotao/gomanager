@@ -27,7 +27,7 @@ func Create(c *gin.Context) {
 		Mobile:   r.Mobile,
 		Password: r.Password,
 		HeadImg:  r.HeadImg,
-		LastTime: time.Now().Format("2006-01-02 15:04:05"),
+		LastTime: time.Now(),
 		LastIp:   c.ClientIP(),
 		Status:   managerModel.ON,
 	}
