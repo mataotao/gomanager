@@ -79,6 +79,11 @@ func List(cond map[string]interface{}) (*ListResponse, error) {
 		wg.Wait()
 		close(finished)
 	}()
+	/**
+	select 语句使一个 Go 程可以等待多个通信操作。
+    select 会阻塞到某个分支可以继续执行为止，这时就会执行该分支。当多个分支都准备好时会随机选择一个执行
+	select 有比较多的限制，其中最大的一条限制就是每个case语句里必须是一个IO操作，确切的说，应该是一个面向channel的IO操作。
+	 */
 	select {
 	case <-finished:
 	case err := <-errChan:

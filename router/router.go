@@ -5,6 +5,7 @@ import (
 	"apiserver/handler/admin/manager/permission"
 	"apiserver/handler/admin/manager/role"
 	"apiserver/handler/admin/manager/user"
+	"apiserver/handler/global"
 	"apiserver/handler/sd"
 	"apiserver/router/middleware"
 	"github.com/gin-contrib/pprof"
@@ -84,6 +85,12 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	}
 
 	/////////////////////////////////////////////////////后台 start///////////////////////////////////////////////////////////////////////////
+	//上传
+	globals := g.Group("/globals")
+	{
+		globals.POST("/uploads", global.Uploads)
+	}
+
 	// The health check handlers
 	svcd := g.Group("/sd")
 	{
