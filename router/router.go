@@ -5,6 +5,7 @@ import (
 	"apiserver/handler/admin/manager/permission"
 	"apiserver/handler/admin/manager/role"
 	"apiserver/handler/admin/manager/user"
+	"apiserver/handler/admin/manager/condition"
 	"apiserver/handler/global"
 	"apiserver/handler/sd"
 	"apiserver/router/middleware"
@@ -46,6 +47,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	admin := g.Group("/admin/")
 	admin.Use(middleware.AuthMiddleware())
 	{
+		admin.GET("condition",condition.Condition)
 		//manager module
 		//----------------------------权限----------------------------------------------------------
 		//新增权限
@@ -85,7 +87,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	}
 
 	/////////////////////////////////////////////////////后台 start///////////////////////////////////////////////////////////////////////////
-	//上传
+	//公共接口
 	globals := g.Group("/globals")
 	{
 		globals.POST("/uploads", global.Uploads)

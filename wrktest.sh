@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+./#!/bin/bash
 
 : << EOF
 API 性能测试脚本，会自动执行 wrk 命令，采集数据、分析数据并调用 gnuplot 画图
