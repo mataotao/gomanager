@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"apiserver/model/admin/managerModel"
 	"reflect"
+	"sync"
 )
 
 func Condition(c *gin.Context) {
@@ -15,15 +16,35 @@ func Condition(c *gin.Context) {
 
 	conds := GetFieldName(r)
 	res := make(map[string]interface{}, 0)
-	for k, v := range conds {
-		if len(v.([]string)) > 0 {
-			switch k {
-			case "Role":
-				res["Role"] = Role(v.([]string))
-			case "User":
-				res["User"] = User(v.([]string))
+	wg := sync.WaitGroup{}
+	finished := make(chan bool, 1)
+	errChan := make(chan error, 1)
+	for k, cond := range conds {
+		wg.Add(1)
+		go func(key string, v interface{}) {
+			defer wg.Done()
+			if len(v.([]string)) > 0 {
+				switch key {
+				case "Role":
+					res["Role"] = Role(v.([]string))
+				case "User":
+					res["User"] = User(v.([]string))
+				}
 			}
-		}
+		}(k, cond)
+
+	}
+	go func() {
+		wg.Wait()
+		close(finished)
+	}()
+	select {
+	case <-finished:
+	case err := <-errChan:
+		handler.SendResponse(c, err, res)
+		return
+
+
 	}
 	handler.SendResponse(c, nil, res)
 }
