@@ -6,6 +6,7 @@ import (
 	"apiserver/model/admin/managerModel"
 	"reflect"
 	"sync"
+	"strconv"
 )
 
 func Condition(c *gin.Context) {
@@ -26,9 +27,19 @@ func Condition(c *gin.Context) {
 			if len(v.([]string)) > 0 {
 				switch key {
 				case "Role":
-					res["Role"] = Role(v.([]string))
+					role, err := Role(v.([]string))
+					if err != nil {
+						errChan <- err
+						return
+					}
+					res["role"] = role
 				case "User":
-					res["User"] = User(v.([]string))
+					user, err := User(v.([]string))
+					if err != nil {
+						errChan <- err
+						return
+					}
+					res["user"] = user
 				}
 			}
 		}(k, cond)
@@ -54,6 +65,11 @@ type Conditions struct {
 	User []string `json:"user"`
 }
 
+type Response struct {
+	Key   string `json:"key"`
+	Value string `json:"value"`
+}
+
 //获取名称跟方法
 func GetFieldName(structName Conditions) map[string]interface{} {
 	t := reflect.TypeOf(structName)
@@ -69,22 +85,30 @@ func GetFieldName(structName Conditions) map[string]interface{} {
 }
 
 //角色
-func Role(c []string) map[string]interface{} {
+func Role(c []string) (map[string]interface{}, error) {
 	res := make(map[string]interface{}, len(c))
 	for _, v := range c {
 		switch v {
 		//角色列表
 		case "list":
 			var list managerModel.RoleModel
-			l, _ := list.All()
-			res["list"] = l
+			l, err := list.All()
+			if err != nil {
+				return res, err
+			}
+			r := make([]Response, len(l))
+			for k, role := range l {
+				t := Response{strconv.Itoa(int(role.Id)), role.Name}
+				r[k] = t
+			}
+			res["list"] = r
 
 		}
 	}
-	return res
+	return res, nil
 }
 
-func User(c []string) map[string]interface{} {
+func User(c []string) (map[string]interface{}, error) {
 	res := make(map[string]interface{}, len(c))
 	for _, v := range c {
 		switch v {
@@ -98,5 +122,5 @@ func User(c []string) map[string]interface{} {
 
 		}
 	}
-	return res
+	return res, nil
 }

@@ -5,6 +5,7 @@ import (
 	"apiserver/model"
 	"github.com/spf13/viper"
 	globalModel "apiserver/pkg/global/model"
+	"apiserver/pkg/constvar"
 	"sync"
 	"runtime"
 	"time"
@@ -167,11 +168,23 @@ func (u *UserModel) List(page, limit, roleId uint64) ([]*UserModel, map[uint64][
 		}
 	}
 
+	if limit == 0 {
+		limit = constvar.DefaultLimit
+	}
+	if page == 0 {
+		page = constvar.DefaultPage
+	}
+	start := (page - 1) * limit
+
 	var userInfoList []*UserModel
-	if err := DB.Count(&count).Find(&userInfoList).Error; err != nil {
+	if err := DB.Count(&count).Error; err != nil {
 		return nil, nil, count, err
 	}
 
+
+	if err := DB.Offset(start).Limit(limit).Order("id desc").Find(&userInfoList).Error; err != nil {
+		return nil, nil, count, err
+	}
 	currentUIds := make([]uint64, len(userInfoList))
 
 	for i, v := range userInfoList {

@@ -49,12 +49,14 @@ func List(cond map[string]interface{}) (*ListResponse, error) {
 			rId, ok := roleIds[u.Id]
 			if ok == false {
 				errChan <- errors.New("not key")
+				return
 			}
 			var roleNames bytes.Buffer
 			for _, id := range rId {
 				rn, ok := roleMaps[id]
 				if ok == false {
 					errChan <- errors.New("not key")
+					return
 				}
 				roleNames.WriteString(rn.Name)
 				roleNames.WriteString(" ")
