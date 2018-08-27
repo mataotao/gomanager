@@ -204,6 +204,12 @@ func (u *UserModel) List(page, limit, roleId uint64) ([]*UserModel, map[uint64][
 	return userInfoList, userRoleIds, count, nil
 }
 
+func GetUser(username string) (*UserModel, error) {
+	u := &UserModel{}
+	d := model.DB.Self.Where("username = ?", username).First(&u)
+	return u, d.Error
+}
+
 type userInfo struct {
 	Id       uint64   `json:"id"`
 	Username string   `json:"username"`

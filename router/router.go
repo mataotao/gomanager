@@ -1,16 +1,17 @@
 package router
 
 import (
-	"net/http"
+	"apiserver/handler/admin/manager/condition"
+	"apiserver/handler/admin/manager/login"
 	"apiserver/handler/admin/manager/permission"
 	"apiserver/handler/admin/manager/role"
 	"apiserver/handler/admin/manager/user"
-	"apiserver/handler/admin/manager/condition"
 	"apiserver/handler/global"
 	"apiserver/handler/sd"
 	"apiserver/router/middleware"
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 // Load loads the middlewares, routes, handlers.
@@ -30,7 +31,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	pprof.Register(g)
 
 	// api for authentication functionalities
-	//g.POST("/login", user.Login)
+	g.POST("/login", login.Login)
 
 	// The user handlers, requiring authentication
 	//u := g.Group("/user")
@@ -47,7 +48,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	admin := g.Group("/admin/")
 	admin.Use(middleware.AuthMiddleware())
 	{
-		admin.GET("condition",condition.Condition)
+		admin.GET("condition", condition.Condition)
 		//manager module
 		//----------------------------权限----------------------------------------------------------
 		//新增权限
