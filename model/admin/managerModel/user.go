@@ -1,13 +1,13 @@
 package managerModel
 
 import (
-	"apiserver/pkg/auth"
 	"apiserver/model"
-	"github.com/spf13/viper"
-	globalModel "apiserver/pkg/global/model"
+	"apiserver/pkg/auth"
 	"apiserver/pkg/constvar"
-	"sync"
+	globalModel "apiserver/pkg/global/model"
+	"github.com/spf13/viper"
 	"runtime"
+	"sync"
 	"time"
 )
 
@@ -109,10 +109,12 @@ func (u *UserModel) Get() (*userInfo, error) {
 			errChan <- err
 		}
 	}(u.Id)
-	var ur []UserRoleModel
+	var roleIds []uint64
+	var ur UserRoleModel
+	roleTableName := ur.TableName()
 	go func(id uint64) {
 		defer wg.Done()
-		if err := model.DB.Self.Where("user_id = ? ", id).Find(&ur).Error; err != nil {
+		if err := model.DB.Self.Table(roleTableName).Where("user_id = ? ", id).Pluck("role_id", &roleIds).Error; err != nil {
 			errChan <- err
 		}
 	}(u.Id)
@@ -127,11 +129,12 @@ func (u *UserModel) Get() (*userInfo, error) {
 		return nil, err
 	}
 	info := &userInfo{
+		Id:       u.Id,
 		Username: u.Username,
 		Name:     u.Name,
 		Mobile:   u.Mobile,
 		HeadImg:  u.HeadImg,
-		Roles:    ur,
+		Roles:    roleIds,
 	}
 	return info, nil
 }
@@ -181,7 +184,6 @@ func (u *UserModel) List(page, limit, roleId uint64) ([]*UserModel, map[uint64][
 		return nil, nil, count, err
 	}
 
-
 	if err := DB.Offset(start).Limit(limit).Order("id desc").Find(&userInfoList).Error; err != nil {
 		return nil, nil, count, err
 	}
@@ -203,11 +205,12 @@ func (u *UserModel) List(page, limit, roleId uint64) ([]*UserModel, map[uint64][
 }
 
 type userInfo struct {
-	Username string          `json:"username"`
-	Name     string          `json:"name"`
-	Mobile   uint64          `json:"mobile"`
-	HeadImg  string          `json:"head_img"`
-	Roles    []UserRoleModel `json:"roles"`
+	Id       uint64   `json:"id"`
+	Username string   `json:"username"`
+	Name     string   `json:"name"`
+	Mobile   uint64   `json:"mobile"`
+	HeadImg  string   `json:"head_img"`
+	Roles    []uint64 `json:"roles"`
 }
 
 type UserListInfo struct {
