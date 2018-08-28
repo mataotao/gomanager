@@ -19,6 +19,7 @@ var (
 type Context struct {
 	ID       uint64
 	Username string
+	LastTime time.Time
 }
 
 // secretFunc validates the secret format.

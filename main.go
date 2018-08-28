@@ -15,6 +15,7 @@ import (
 	"apiserver/router"
 	"apiserver/router/middleware"
 
+	"apiserver/pkg/global/redis"
 	"github.com/gin-gonic/gin"
 	"github.com/lexkong/log"
 	"github.com/spf13/pflag"
@@ -48,6 +49,10 @@ func main() {
 	// init db
 	model.DB.Init()
 	defer model.DB.Close()
+
+	//init redis
+	redis.Pool.Init()
+	defer redis.Pool.Close()
 
 	// Set gin mode.
 	gin.SetMode(viper.GetString("runmode"))
