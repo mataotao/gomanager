@@ -1,10 +1,8 @@
 package middleware
 
 import (
-	//"apiserver/handler"
-	//"apiserver/pkg/errno"
+	"apiserver/pkg/errno"
 	"apiserver/pkg/token"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,10 +11,12 @@ func AuthMiddleware() gin.HandlerFunc {
 		// Parse the json web token.
 		if _, err := token.ParseRequest(c); err != nil {
 			//handler.SendResponse(c, errno.ErrTokenInvalid, nil)
-			//c.Abort()
-			//return
+			c.String(401, "key 无效")
+			c.Error(errno.ErrTokenInvalid)
+			c.Abort()
+			return
 		}
-
+		return
 		c.Next()
 	}
 }

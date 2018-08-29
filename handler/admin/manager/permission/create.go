@@ -30,6 +30,7 @@ func Create(c *gin.Context) {
 		Level:         request.Level,
 		Url:           request.Url,
 		Sort:          request.Sort,
+		Cond:          request.Cond,
 	}
 	//验证
 	if err := p.Validate(); err != nil {

@@ -1,13 +1,16 @@
 package token
 
 import (
+	"apiserver/pkg/global/redis"
+	"bytes"
 	"errors"
 	"fmt"
-	"time"
-
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	redisgo "github.com/gomodule/redigo/redis"
 	"github.com/spf13/viper"
+	"strconv"
+	"time"
 )
 
 var (
@@ -19,7 +22,6 @@ var (
 type Context struct {
 	ID       uint64
 	Username string
-	LastTime time.Time
 }
 
 // secretFunc validates the secret format.
@@ -50,6 +52,16 @@ func Parse(tokenString string, secret string) (*Context, error) {
 	} else if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		ctx.ID = uint64(claims["id"].(float64))
 		ctx.Username = claims["username"].(string)
+		var key bytes.Buffer
+		key.WriteString("user:login:")
+		key.WriteString(strconv.Itoa(int(ctx.ID)))
+		pool := redis.Pool.Pool.Get()
+		defer pool.Close()
+
+		redisToken, err := redisgo.String(pool.Do("GET", key.String()))
+		if err != nil || redisToken != tokenString {
+			return ctx, errors.New("key无效")
+		}
 		return ctx, nil
 
 		// Other errors.

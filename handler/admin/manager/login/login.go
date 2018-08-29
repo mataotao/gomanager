@@ -11,7 +11,7 @@ func Login(c *gin.Context) {
 	if err := c.Bind(&r); err != nil {
 		handler.SendResponse(c, err, nil)
 	}
-	token, err := loginService.Login(r.Username, r.Password,c.ClientIP())
+	token, err := loginService.Login(r.Username, r.Password, c.ClientIP())
 	if err != nil {
 		handler.SendResponse(c, err, nil)
 	}

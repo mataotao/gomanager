@@ -20,7 +20,7 @@ func Login(username string, pwd string, ip string) (string, error) {
 		return "", err
 	}
 	currentTime := time.Now()
-	t, err := token.Sign(token.Context{ID: u.Id, Username: u.Username, LastTime: currentTime}, "")
+	t, err := token.Sign(token.Context{ID: u.Id, Username: u.Username}, "")
 	if err != nil {
 		return "", err
 	}

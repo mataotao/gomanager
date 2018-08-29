@@ -11,6 +11,7 @@ type CreateRequest struct {
 	Url           string `json:"url"`
 	Level         uint8  `json:"level"`
 	Sort          uint64 `json:"sort"`
+	Cond          string `json:"cond"`
 }
 
 type CreateResponse struct {
@@ -22,5 +23,6 @@ type UpdateRequest struct {
 	Sort          uint64 `json:"sort"`
 	IsContainMenu uint8  `json:"iscontainmenu"`
 	Url           string `json:"url"`
+	Cond          string `json:"cond"`
 	UpdatedAt     time.Time
 }

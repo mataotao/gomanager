@@ -15,6 +15,7 @@ type PermissionModel struct {
 	Level         uint8  `json:"level" gorm:"column:level;not null" binding:"required" validate:"required"`
 	Url           string `json:"url" gorm:"column:url"`
 	Sort          uint64 `json:"sort" gorm:"column:sort;default:'500'"`
+	Cond          string `json:"cond"`
 }
 
 //表名
