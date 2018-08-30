@@ -3,6 +3,7 @@ package middleware
 import (
 	"apiserver/pkg/errno"
 	"apiserver/pkg/token"
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,6 +17,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
+		fmt.Println(c.Request.URL)
 		return
 		c.Next()
 	}

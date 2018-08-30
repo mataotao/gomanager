@@ -19,6 +19,13 @@ func Login(username string, pwd string, ip string) (string, error) {
 	if err := auth.Compare(u.Password, pwd); err != nil {
 		return "", err
 	}
+	var ur managerModel.UserRoleModel
+	ur.UserId = u.Id
+	roleIds, err := ur.GetRoleIds()
+	if err != nil {
+		return "", err
+	}
+
 	currentTime := time.Now()
 	t, err := token.Sign(token.Context{ID: u.Id, Username: u.Username}, "")
 	if err != nil {
@@ -37,6 +44,13 @@ func Login(username string, pwd string, ip string) (string, error) {
 	key.WriteString("user:login:")
 	key.WriteString(strconv.Itoa(int(u.Id)))
 	if _, err := pool.Do("Set", key.String(), t); err != nil {
+		return "", err
+	}
+
+	var roleKey bytes.Buffer
+	roleKey.WriteString("user:permission:")
+	roleKey.WriteString(strconv.Itoa(int(u.Id)))
+	if _,err:= pool.Do("Set",roleKey.String(),roleIds);err!=nil{
 		return "", err
 	}
 

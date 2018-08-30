@@ -3,15 +3,15 @@ package global
 import (
 	"apiserver/handler"
 	"apiserver/pkg/global/dir"
+	"bytes"
 	"github.com/gin-gonic/gin"
 	uuid "github.com/satori/go.uuid"
-	"os"
 	"io"
-	"bytes"
-	"time"
-	"path"
 	"mime/multipart"
+	"os"
+	"path"
 	"sync"
+	"time"
 )
 
 func Uploads(c *gin.Context) {
@@ -21,7 +21,7 @@ func Uploads(c *gin.Context) {
 	}
 	formData := c.Request.MultipartForm
 	files := formData.File["file"]
-	fileNames := make([]string,0)
+	fileNames := make([]string, 0)
 	wg := sync.WaitGroup{}
 	errChan := make(chan error, 1)
 	finished := make(chan bool, 1)
@@ -62,7 +62,7 @@ func Uploads(c *gin.Context) {
 			if _, err := io.Copy(out, file); err != nil {
 				errChan <- err
 			}
-			fileNames = append(fileNames,name)
+			fileNames = append(fileNames, name)
 		}(v)
 
 	}
