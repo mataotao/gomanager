@@ -31,6 +31,25 @@ func Permission() error {
 	defer pool.Close()
 	errChan := make(chan error, 1)
 	finished := make(chan bool, 1)
+	searchData, err := redisgo.Strings(pool.Do("KEYS", "user:permission:*"))
+	if err != nil {
+		return err
+	}
+	if len(searchData) > 0 {
+		if err != nil {
+			return err
+		}
+		delKeys := redisgo.Args{}
+		for _, dk := range searchData {
+			delKeys = delKeys.Add(dk)
+		}
+		//批量删除key
+		_, err = pool.Do("DEL", delKeys...)
+		if err != nil {
+			return err
+		}
+
+	}
 	for _, v := range list {
 		wg.Add(1)
 		go func(p *managerModel.PermissionModel) {
