@@ -6,6 +6,7 @@ import (
 	"apiserver/pkg/global/redis"
 	"apiserver/pkg/token"
 	"bytes"
+	redisgo "github.com/gomodule/redigo/redis"
 	"strconv"
 	"time"
 )
@@ -19,13 +20,17 @@ func Login(username string, pwd string, ip string) (string, error) {
 	if err := auth.Compare(u.Password, pwd); err != nil {
 		return "", err
 	}
-	var ur managerModel.UserRoleModel
-	ur.UserId = u.Id
-	roleIds, err := ur.GetRoleIds()
+	var roleIds []uint64
+	if u.IsRoot == managerModel.ON {
+		roleIds, err = managerModel.ListPermissionIds()
+	} else {
+		var ur managerModel.UserRoleModel
+		ur.UserId = u.Id
+		roleIds, err = ur.GetRoleIds()
+	}
 	if err != nil {
 		return "", err
 	}
-
 	currentTime := time.Now()
 	t, err := token.Sign(token.Context{ID: u.Id, Username: u.Username}, "")
 	if err != nil {
@@ -48,9 +53,16 @@ func Login(username string, pwd string, ip string) (string, error) {
 	}
 
 	var roleKey bytes.Buffer
-	roleKey.WriteString("user:permission:")
+	roleKey.WriteString("user:permission:ids:")
 	roleKey.WriteString(strconv.Itoa(int(u.Id)))
-	if _,err:= pool.Do("Set",roleKey.String(),roleIds);err!=nil{
+	args := redisgo.Args{}.Add(roleKey.String())
+	for _, v := range roleIds {
+		args = args.AddFlat(v)
+	}
+	if _, err := pool.Do("DEL", roleKey.String()); err != nil {
+		return "", err
+	}
+	if _, err := pool.Do("SADD", args...); err != nil {
 		return "", err
 	}
 

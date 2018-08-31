@@ -67,6 +67,16 @@ func ListPermission() ([]*PermissionModel, error) {
 	}
 	return permissionList, nil
 }
+func ListPermissionIds() ([]uint64, error) {
+	var roleIds []uint64
+	var p PermissionModel
+	tableName:=p.TableName()
+	err := model.DB.Self.Table(tableName).Pluck("id", &roleIds)
+	if err.Error != nil {
+		return roleIds, err.Error
+	}
+	return roleIds, nil
+}
 
 type PermissionListInfo struct {
 	Id            uint64               `json:"id"`

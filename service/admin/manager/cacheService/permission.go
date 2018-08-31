@@ -31,7 +31,7 @@ func Permission() error {
 	defer pool.Close()
 	errChan := make(chan error, 1)
 	finished := make(chan bool, 1)
-	searchData, err := redisgo.Strings(pool.Do("KEYS", "user:permission:*"))
+	searchData, err := redisgo.Strings(pool.Do("KEYS", "user:permission:route:*"))
 	if err != nil {
 		return err
 	}
@@ -60,7 +60,7 @@ func Permission() error {
 				condArr := strings.Split(p.Cond, ",")
 				for _, per := range condArr {
 					var key bytes.Buffer
-					key.WriteString("user:permission:")
+					key.WriteString("user:permission:route:")
 					key.WriteString(per)
 					data, err := pool.Do("GET", key.String())
 					if err != nil {
