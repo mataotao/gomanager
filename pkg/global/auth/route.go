@@ -5,6 +5,7 @@ import (
 	"bytes"
 	redisgo "github.com/gomodule/redigo/redis"
 	"strconv"
+	"strings"
 )
 
 func Route(route string, id uint64) bool {
@@ -20,9 +21,18 @@ func Route(route string, id uint64) bool {
 	var userKey bytes.Buffer
 	userKey.WriteString("user:permission:ids:")
 	userKey.WriteString(strconv.Itoa(int(id)))
-	userAllPermission, err := redisgo.Bool(pool.Do("SISMEMBER", redisgo.Args{}.Add(userKey.String()).AddFlat(routeIds)...))
-	if err != nil {
-		return false
+	rids := make([]string, 0)
+	if strings.Contains(routeIds, ",") {
+		rids = strings.Split(routeIds, ",")
+	} else {
+		rids = append(rids, routeIds)
 	}
-	return userAllPermission
+	res := false
+	for _, v := range rids {
+		userAllPermission, err := redisgo.Bool(pool.Do("SISMEMBER", redisgo.Args{}.Add(userKey.String()).AddFlat(v)...))
+		if err == nil && userAllPermission == true {
+			res = true
+		}
+	}
+	return res
 }

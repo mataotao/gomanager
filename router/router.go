@@ -44,11 +44,10 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	//	u.GET("/:username", user.Get)
 	//}
 	/////////////////////////////////////////////////////后台 start///////////////////////////////////////////////////////////////////////////
-
 	admin := g.Group("/admin/")
+	admin.GET("condition", condition.Condition)
 	admin.Use(middleware.AuthMiddleware())
 	{
-		admin.GET("condition", condition.Condition)
 		//manager module
 		//----------------------------权限----------------------------------------------------------
 		//新增权限
