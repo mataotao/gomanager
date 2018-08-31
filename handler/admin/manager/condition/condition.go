@@ -2,11 +2,11 @@ package condition
 
 import (
 	"apiserver/handler"
-	"github.com/gin-gonic/gin"
 	"apiserver/model/admin/managerModel"
+	"github.com/gin-gonic/gin"
 	"reflect"
-	"sync"
 	"strconv"
+	"sync"
 )
 
 func Condition(c *gin.Context) {

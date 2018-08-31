@@ -92,6 +92,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	globals := g.Group("/globals")
 	{
 		globals.POST("/uploads", global.Uploads)
+		globals.GET("/caches", global.Cache)
 	}
 
 	// The health check handlers

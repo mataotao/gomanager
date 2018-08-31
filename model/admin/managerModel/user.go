@@ -6,7 +6,6 @@ import (
 	"apiserver/pkg/constvar"
 	globalModel "apiserver/pkg/global/model"
 	"github.com/spf13/viper"
-	"runtime"
 	"sync"
 	"time"
 )
@@ -98,7 +97,6 @@ func (u *UserModel) Updates(roles []uint64) error {
 }
 
 func (u *UserModel) Get() (*userInfo, error) {
-	runtime.GOMAXPROCS(runtime.NumCPU())
 	wg := sync.WaitGroup{}
 	wg.Add(2)
 	finished := make(chan bool, 1)

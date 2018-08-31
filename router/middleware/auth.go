@@ -17,7 +17,7 @@ func AuthMiddleware() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		fmt.Println(c.Request.URL)
+		fmt.Println(c.HandlerName())
 		return
 		c.Next()
 	}
