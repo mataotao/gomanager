@@ -10,7 +10,7 @@ import (
 func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// Parse the json web token.
-		info, err := token.ParseRequest(c);
+		info, err := token.ParseRequest(c)
 		if err != nil {
 			//handler.SendResponse(c, errno.ErrTokenInvalid, nil)
 			c.String(401, "key 无效")
@@ -25,7 +25,6 @@ func AuthMiddleware() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		return
 		c.Next()
 	}
 }

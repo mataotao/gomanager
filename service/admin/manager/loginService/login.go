@@ -6,6 +6,7 @@ import (
 	"apiserver/pkg/global/redis"
 	"apiserver/pkg/token"
 	"bytes"
+	"errors"
 	redisgo "github.com/gomodule/redigo/redis"
 	"strconv"
 	"time"
@@ -20,6 +21,10 @@ func Login(username string, pwd string, ip string) (string, error) {
 	if err := auth.Compare(u.Password, pwd); err != nil {
 		return "", err
 	}
+	if u.Status == managerModel.FREEZE {
+		return "", errors.New("账号冻结")
+	}
+
 	var roleIds []uint64
 	if u.IsRoot == managerModel.ON {
 		roleIds, err = managerModel.ListPermissionIds()

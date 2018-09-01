@@ -2,8 +2,8 @@ package managerModel
 
 import (
 	"apiserver/model"
-	"github.com/spf13/viper"
 	"apiserver/requests/admin/manager/permissionRequests"
+	"github.com/spf13/viper"
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
@@ -16,6 +16,7 @@ type PermissionModel struct {
 	Url           string `json:"url" gorm:"column:url"`
 	Sort          uint64 `json:"sort" gorm:"column:sort;default:'500'"`
 	Cond          string `json:"cond"`
+	Icon          string `json:"icon"`
 }
 
 //表名
@@ -70,7 +71,7 @@ func ListPermission() ([]*PermissionModel, error) {
 func ListPermissionIds() ([]uint64, error) {
 	var roleIds []uint64
 	var p PermissionModel
-	tableName:=p.TableName()
+	tableName := p.TableName()
 	err := model.DB.Self.Table(tableName).Pluck("id", &roleIds)
 	if err.Error != nil {
 		return roleIds, err.Error
@@ -89,4 +90,10 @@ type PermissionListInfo struct {
 	CreatedAt     string               `json:"created_at"`
 	UpdatedAt     string               `json:"updated_at"`
 	Children      []PermissionListInfo `json:"children"`
+}
+type MenuInfo struct {
+	Icon  string     `json:"icon"`
+	Title string     `json:"title" `
+	Index string     `json:"index" `
+	Subs  []MenuInfo `json:"subs"`
 }

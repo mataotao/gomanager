@@ -45,7 +45,10 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	//}
 	/////////////////////////////////////////////////////后台 start///////////////////////////////////////////////////////////////////////////
 	admin := g.Group("/admin/")
+	//条件
 	admin.GET("condition", condition.Condition)
+	//菜单
+	admin.GET("menu", permission.Menu)
 	admin.Use(middleware.AuthMiddleware())
 	{
 		//manager module
@@ -60,6 +63,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		admin.GET("manager/permission/:id", permission.Get)
 		//获取权限列表
 		admin.GET("manager/permission", permission.List)
+
 		//----------------------------角色----------------------------------------------------------
 		//新增角色
 		admin.POST("manager/role", role.Create)

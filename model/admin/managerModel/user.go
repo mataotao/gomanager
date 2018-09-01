@@ -11,7 +11,8 @@ import (
 )
 
 const (
-	ON uint8 = 1
+	ON     uint8 = 1
+	FREEZE uint8 = 2 //冻结
 )
 
 type UserModel struct {

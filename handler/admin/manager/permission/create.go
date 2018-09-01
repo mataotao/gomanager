@@ -31,6 +31,7 @@ func Create(c *gin.Context) {
 		Url:           request.Url,
 		Sort:          request.Sort,
 		Cond:          request.Cond,
+		Icon:          request.Icon,
 	}
 	//验证
 	if err := p.Validate(); err != nil {
