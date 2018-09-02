@@ -41,6 +41,7 @@ func Login(username string, pwd string, ip string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	//更新数据库
 	var userUpdate managerModel.UserModel
 	userUpdate.Id = u.Id
 	userUpdate.LastTime = currentTime
@@ -50,26 +51,35 @@ func Login(username string, pwd string, ip string) (string, error) {
 	}
 	pool := redis.Pool.Pool.Get()
 	defer pool.Close()
+	uidStr := strconv.Itoa(int(u.Id))
+	//token
 	var key bytes.Buffer
 	key.WriteString("user:login:")
-	key.WriteString(strconv.Itoa(int(u.Id)))
+	key.WriteString(uidStr)
 	if _, err := pool.Do("Set", key.String(), t); err != nil {
 		return "", err
 	}
-
-	var roleKey bytes.Buffer
-	roleKey.WriteString("user:permission:ids:")
-	roleKey.WriteString(strconv.Itoa(int(u.Id)))
-	args := redisgo.Args{}.Add(roleKey.String())
+	//权限
+	var permissionKey bytes.Buffer
+	permissionKey.WriteString("user:permission:ids:")
+	permissionKey.WriteString(uidStr)
+	args := redisgo.Args{}.Add(permissionKey.String())
 	for _, v := range roleIds {
 		args = args.AddFlat(v)
 	}
-	if _, err := pool.Do("DEL", roleKey.String()); err != nil {
+	//删除权限
+	if _, err := pool.Do("DEL", permissionKey.String()); err != nil {
 		return "", err
 	}
 	if _, err := pool.Do("SADD", args...); err != nil {
 		return "", err
 	}
-
+	//删除菜单
+	var menuKey bytes.Buffer
+	menuKey.WriteString("user:menu:")
+	menuKey.WriteString(uidStr)
+	if _, err := pool.Do("DEL", menuKey.String()); err != nil {
+		return "", err
+	}
 	return t, nil
 }
