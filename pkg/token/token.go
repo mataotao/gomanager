@@ -52,16 +52,37 @@ func Parse(tokenString string, secret string) (*Context, error) {
 	} else if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		ctx.ID = uint64(claims["id"].(float64))
 		ctx.Username = claims["username"].(string)
+		uId := strconv.Itoa(int(ctx.ID))
 		var key bytes.Buffer
 		key.WriteString("user:login:")
-		key.WriteString(strconv.Itoa(int(ctx.ID)))
+		key.WriteString(uId)
+		loginStr := key.String()
 		pool := redis.Pool.Pool.Get()
 		defer pool.Close()
 
-		redisToken, err := redisgo.String(pool.Do("GET", key.String()))
+		redisToken, err := redisgo.String(pool.Do("GET", loginStr))
 		if err != nil || redisToken != tokenString {
 			return ctx, errors.New("key无效")
 		}
+
+		var permissionKey bytes.Buffer
+		permissionKey.WriteString("user:permission:ids:")
+		permissionKey.WriteString(uId)
+
+		var menuKey bytes.Buffer
+		menuKey.WriteString("user:menu:")
+		menuKey.WriteString(uId)
+		//设置有效时间
+		if _, err = pool.Do("EXPIRE", loginStr, 20*60); err != nil {
+			return nil, err
+		}
+		if _, err = pool.Do("EXPIRE", permissionKey.String(), 20*60); err != nil {
+			return nil, err
+		}
+		if _, err = pool.Do("EXPIRE", menuKey.String(), 20*60); err != nil {
+			return nil, err
+		}
+
 		return ctx, nil
 
 		// Other errors.

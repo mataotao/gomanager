@@ -134,6 +134,9 @@ func (u *UserModel) Get() (*userInfo, error) {
 		Mobile:   u.Mobile,
 		HeadImg:  u.HeadImg,
 		Roles:    roleIds,
+		LastTime: u.LastTime,
+		LastIp:   u.LastIp,
+		IsRoot:   u.IsRoot,
 	}
 	return info, nil
 }
@@ -210,12 +213,15 @@ func GetUser(username string) (*UserModel, error) {
 }
 
 type userInfo struct {
-	Id       uint64   `json:"id"`
-	Username string   `json:"username"`
-	Name     string   `json:"name"`
-	Mobile   uint64   `json:"mobile"`
-	HeadImg  string   `json:"head_img"`
-	Roles    []uint64 `json:"roles"`
+	Id       uint64    `json:"id"`
+	Username string    `json:"username"`
+	Name     string    `json:"name"`
+	Mobile   uint64    `json:"mobile"`
+	HeadImg  string    `json:"head_img"`
+	Roles    []uint64  `json:"roles"`
+	LastTime time.Time `json:"last_time"`
+	LastIp   string    `json:"last_ip"`
+	IsRoot   uint8     `json:"is_root"`
 }
 
 type UserListInfo struct {
@@ -229,6 +235,13 @@ type UserListInfo struct {
 	IsRoot   uint8  `json:"is_root"`
 	Status   uint8  `json:"status"`
 	RoleName string `json:"role_name"`
+}
+
+type LoginInfo struct {
+	Token    string `json:"token"`
+	Username string `json:"username"`
+	IsRoot   uint8  `json:"is_root"`
+	HeadImg  string `json:"head_img"`
 }
 
 type UserList struct {

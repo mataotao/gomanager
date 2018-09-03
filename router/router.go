@@ -49,6 +49,9 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	admin.GET("condition", condition.Condition)
 	//菜单
 	admin.GET("menu", permission.Menu)
+	//获取当前的管理员信息
+	admin.GET("manager/current-user", user.Current)
+
 	admin.Use(middleware.AuthMiddleware())
 	{
 		//manager module
@@ -88,6 +91,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		admin.GET("manager/user/:id", user.Get)
 		//获取管理员列表
 		admin.GET("manager/user", user.List)
+
 	}
 
 	/////////////////////////////////////////////////////后台 start///////////////////////////////////////////////////////////////////////////

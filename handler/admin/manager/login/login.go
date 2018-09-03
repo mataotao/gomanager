@@ -11,19 +11,15 @@ func Login(c *gin.Context) {
 	if err := c.Bind(&r); err != nil {
 		handler.SendResponse(c, err, nil)
 	}
-	token, err := loginService.Login(r.Username, r.Password, c.ClientIP())
+	login, err := loginService.Login(r.Username, r.Password, c.ClientIP())
 	if err != nil {
 		handler.SendResponse(c, err, nil)
 	}
-	handler.SendResponse(c, nil, LoginResponse{token})
+	handler.SendResponse(c, nil, login)
 
 }
 
 type LoginRequest struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
-}
-
-type LoginResponse struct {
-	Token string `json:"token"`
 }

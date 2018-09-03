@@ -12,17 +12,18 @@ import (
 	"time"
 )
 
-func Login(username string, pwd string, ip string) (string, error) {
+func Login(username string, pwd string, ip string) (*managerModel.LoginInfo, error) {
+
 	u, err := managerModel.GetUser(username)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	if err := auth.Compare(u.Password, pwd); err != nil {
-		return "", err
+		return nil, err
 	}
 	if u.Status == managerModel.FREEZE {
-		return "", errors.New("账号冻结")
+		return nil, errors.New("账号冻结")
 	}
 
 	var roleIds []uint64
@@ -34,12 +35,18 @@ func Login(username string, pwd string, ip string) (string, error) {
 		roleIds, err = ur.GetRoleIds()
 	}
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 	currentTime := time.Now()
 	t, err := token.Sign(token.Context{ID: u.Id, Username: u.Username}, "")
 	if err != nil {
-		return "", err
+		return nil, err
+	}
+	loginInfo := &managerModel.LoginInfo{
+		Token:    t,
+		Username: u.Username,
+		IsRoot:   u.IsRoot,
+		HeadImg:  u.HeadImg,
 	}
 	//更新数据库
 	var userUpdate managerModel.UserModel
@@ -47,7 +54,7 @@ func Login(username string, pwd string, ip string) (string, error) {
 	userUpdate.LastTime = currentTime
 	userUpdate.LastIp = ip
 	if err := userUpdate.Update(); err != nil {
-		return "", err
+		return nil, err
 	}
 	pool := redis.Pool.Pool.Get()
 	defer pool.Close()
@@ -56,30 +63,39 @@ func Login(username string, pwd string, ip string) (string, error) {
 	var key bytes.Buffer
 	key.WriteString("user:login:")
 	key.WriteString(uidStr)
-	if _, err := pool.Do("Set", key.String(), t); err != nil {
-		return "", err
+	loginStr := key.String()
+	if _, err := pool.Do("Set", loginStr, t); err != nil {
+		return nil, err
 	}
 	//权限
 	var permissionKey bytes.Buffer
 	permissionKey.WriteString("user:permission:ids:")
 	permissionKey.WriteString(uidStr)
-	args := redisgo.Args{}.Add(permissionKey.String())
+	permissionKeyStr := permissionKey.String()
+	args := redisgo.Args{}.Add(permissionKeyStr)
 	for _, v := range roleIds {
 		args = args.AddFlat(v)
 	}
 	//删除权限
-	if _, err := pool.Do("DEL", permissionKey.String()); err != nil {
-		return "", err
+	if _, err := pool.Do("DEL", permissionKeyStr); err != nil {
+		return nil, err
 	}
 	if _, err := pool.Do("SADD", args...); err != nil {
-		return "", err
+		return nil, err
 	}
 	//删除菜单
 	var menuKey bytes.Buffer
 	menuKey.WriteString("user:menu:")
 	menuKey.WriteString(uidStr)
 	if _, err := pool.Do("DEL", menuKey.String()); err != nil {
-		return "", err
+		return nil, err
 	}
-	return t, nil
+	//设置有效时间
+	if _, err = pool.Do("EXPIRE", loginStr, 20*60); err != nil {
+		return nil, err
+	}
+	if _, err = pool.Do("EXPIRE", permissionKeyStr, 20*60); err != nil {
+		return nil, err
+	}
+	return loginInfo, nil
 }
