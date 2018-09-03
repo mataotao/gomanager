@@ -55,7 +55,6 @@ func Condition(c *gin.Context) {
 		handler.SendResponse(c, err, res)
 		return
 
-
 	}
 	handler.SendResponse(c, nil, res)
 }

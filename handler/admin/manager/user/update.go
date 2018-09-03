@@ -2,9 +2,9 @@ package user
 
 import (
 	"apiserver/handler"
-	"github.com/gin-gonic/gin"
-	"github.com/asaskevich/govalidator"
 	"apiserver/model/admin/managerModel"
+	"github.com/asaskevich/govalidator"
+	"github.com/gin-gonic/gin"
 	"strconv"
 )
 
@@ -18,7 +18,7 @@ func Update(c *gin.Context) {
 		return
 	}
 
-	if _,err := govalidator.ValidateStruct(&r); err != nil {
+	if _, err := govalidator.ValidateStruct(&r); err != nil {
 		handler.SendResponse(c, err, nil)
 		return
 	}

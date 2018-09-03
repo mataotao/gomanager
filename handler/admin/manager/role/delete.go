@@ -1,10 +1,10 @@
 package role
 
 import (
+	"apiserver/handler"
+	"apiserver/model/admin/managerModel"
 	"github.com/gin-gonic/gin"
 	"strconv"
-	"apiserver/model/admin/managerModel"
-	"apiserver/handler"
 )
 
 func Delete(c *gin.Context) {

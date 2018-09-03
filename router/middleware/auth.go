@@ -13,15 +13,15 @@ func AuthMiddleware() gin.HandlerFunc {
 		info, err := token.ParseRequest(c)
 		if err != nil {
 			//handler.SendResponse(c, errno.ErrTokenInvalid, nil)
-			c.String(401, "key 无效")
+			c.String(401, "")
 			c.Error(errno.ErrTokenInvalid)
 			c.Abort()
 			return
 		}
 		authRoute := auth.Route(c.HandlerName(), info.ID)
 		if authRoute == false {
-			c.String(401, "权限不足")
-			c.Error(errno.ErrTokenInvalid)
+			c.String(401,"")
+			c.Error(errno.ErrAuthInvalid)
 			c.Abort()
 			return
 		}

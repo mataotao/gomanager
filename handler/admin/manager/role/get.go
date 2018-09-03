@@ -1,10 +1,10 @@
 package role
 
 import (
-	"github.com/gin-gonic/gin"
 	"apiserver/handler"
-	"strconv"
 	"apiserver/model/admin/managerModel"
+	"github.com/gin-gonic/gin"
+	"strconv"
 )
 
 func Get(c *gin.Context) {

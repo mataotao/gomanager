@@ -209,6 +209,10 @@ func (u *UserModel) List(page, limit, roleId uint64) ([]*UserModel, map[uint64][
 func GetUser(username string) (*UserModel, error) {
 	u := &UserModel{}
 	d := model.DB.Self.Where("username = ?", username).First(&u)
+	if d.RecordNotFound() {
+		return u, nil
+	}
+
 	return u, d.Error
 }
 

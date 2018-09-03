@@ -1,27 +1,27 @@
 package role
 
 import (
-	"github.com/gin-gonic/gin"
 	"apiserver/handler"
-	"strconv"
 	"apiserver/model/admin/managerModel"
+	"github.com/gin-gonic/gin"
+	"strconv"
 )
 
 func Update(c *gin.Context) {
 	rid, _ := strconv.Atoi(c.Param("id"))
 	var r UpdateRequest
-	if err:=c.Bind(&r);err!=nil{
-		handler.SendResponse(c,err,nil)
+	if err := c.Bind(&r); err != nil {
+		handler.SendResponse(c, err, nil)
 		return
 	}
 	var rm managerModel.RoleModel
 	rm.BaseModel.Id = uint64(rid)
-	data:=&managerModel.RoleModel{Name:r.Name,Description:r.Description}
-	if err:=rm.Update(data,r.Permission);err!=nil{
-		handler.SendResponse(c,err,nil)
+	data := &managerModel.RoleModel{Name: r.Name, Description: r.Description}
+	if err := rm.Update(data, r.Permission); err != nil {
+		handler.SendResponse(c, err, nil)
 		return
 	}
-	handler.SendResponse(c,nil,nil)
+	handler.SendResponse(c, nil, nil)
 
 }
 

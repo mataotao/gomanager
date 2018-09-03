@@ -1,9 +1,9 @@
 package permission
 
 import (
-	"github.com/gin-gonic/gin"
 	"apiserver/handler"
 	"apiserver/model/admin/managerModel"
+	"github.com/gin-gonic/gin"
 	"strconv"
 )
 

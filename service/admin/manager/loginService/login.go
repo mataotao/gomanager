@@ -3,11 +3,12 @@ package loginService
 import (
 	"apiserver/model/admin/managerModel"
 	"apiserver/pkg/auth"
+	"apiserver/pkg/errno"
 	"apiserver/pkg/global/redis"
 	"apiserver/pkg/token"
 	"bytes"
-	"errors"
 	redisgo "github.com/gomodule/redigo/redis"
+	"github.com/lexkong/log"
 	"strconv"
 	"time"
 )
@@ -16,14 +17,16 @@ func Login(username string, pwd string, ip string) (*managerModel.LoginInfo, err
 
 	u, err := managerModel.GetUser(username)
 	if err != nil {
-		return nil, err
+		log.Error("login", err)
+		return nil, errno.ErrUserNameOrPassword
 	}
 
 	if err := auth.Compare(u.Password, pwd); err != nil {
-		return nil, err
+		log.Error("login", err)
+		return nil, errno.ErrUserNameOrPassword
 	}
 	if u.Status == managerModel.FREEZE {
-		return nil, errors.New("账号冻结")
+		return nil, errno.UserFreeze
 	}
 
 	var roleIds []uint64
@@ -35,12 +38,14 @@ func Login(username string, pwd string, ip string) (*managerModel.LoginInfo, err
 		roleIds, err = ur.GetRoleIds()
 	}
 	if err != nil {
-		return nil, err
+		log.Error("login", err)
+		return nil, errno.ErrUserNameOrPassword
 	}
 	currentTime := time.Now()
 	t, err := token.Sign(token.Context{ID: u.Id, Username: u.Username}, "")
 	if err != nil {
-		return nil, err
+		log.Error("login", err)
+		return nil, errno.ErrUserNameOrPassword
 	}
 	loginInfo := &managerModel.LoginInfo{
 		Token:    t,
@@ -54,7 +59,8 @@ func Login(username string, pwd string, ip string) (*managerModel.LoginInfo, err
 	userUpdate.LastTime = currentTime
 	userUpdate.LastIp = ip
 	if err := userUpdate.Update(); err != nil {
-		return nil, err
+		log.Error("login", err)
+		return nil, errno.ErrUserNameOrPassword
 	}
 	pool := redis.Pool.Pool.Get()
 	defer pool.Close()
@@ -65,7 +71,8 @@ func Login(username string, pwd string, ip string) (*managerModel.LoginInfo, err
 	key.WriteString(uidStr)
 	loginStr := key.String()
 	if _, err := pool.Do("Set", loginStr, t); err != nil {
-		return nil, err
+		log.Error("login", err)
+		return nil, errno.ErrUserNameOrPassword
 	}
 	//权限
 	var permissionKey bytes.Buffer
@@ -78,24 +85,29 @@ func Login(username string, pwd string, ip string) (*managerModel.LoginInfo, err
 	}
 	//删除权限
 	if _, err := pool.Do("DEL", permissionKeyStr); err != nil {
-		return nil, err
+		log.Error("login", err)
+		return nil, errno.ErrUserNameOrPassword
 	}
 	if _, err := pool.Do("SADD", args...); err != nil {
-		return nil, err
+		log.Error("login", err)
+		return nil, errno.ErrUserNameOrPassword
 	}
 	//删除菜单
 	var menuKey bytes.Buffer
 	menuKey.WriteString("user:menu:")
 	menuKey.WriteString(uidStr)
 	if _, err := pool.Do("DEL", menuKey.String()); err != nil {
-		return nil, err
+		log.Error("login", err)
+		return nil, errno.ErrUserNameOrPassword
 	}
 	//设置有效时间
 	if _, err = pool.Do("EXPIRE", loginStr, 20*60); err != nil {
-		return nil, err
+		log.Error("login", err)
+		return nil, errno.ErrUserNameOrPassword
 	}
 	if _, err = pool.Do("EXPIRE", permissionKeyStr, 20*60); err != nil {
-		return nil, err
+		log.Error("login", err)
+		return nil, errno.ErrUserNameOrPassword
 	}
 	return loginInfo, nil
 }

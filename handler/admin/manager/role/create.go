@@ -4,8 +4,8 @@ import (
 	"apiserver/handler"
 	"apiserver/model/admin/managerModel"
 	"apiserver/util"
-	"github.com/gin-gonic/gin"
 	"github.com/asaskevich/govalidator"
+	"github.com/gin-gonic/gin"
 	"github.com/lexkong/log"
 	"github.com/lexkong/log/lager"
 )

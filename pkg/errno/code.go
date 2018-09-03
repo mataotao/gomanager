@@ -11,8 +11,8 @@ var (
 	ErrToken      = &Errno{Code: 20003, Message: "Error occurred while signing the JSON web token."}
 
 	// user errors
-	ErrEncrypt           = &Errno{Code: 20101, Message: "Error occurred while encrypting the user password."}
-	ErrUserNotFound      = &Errno{Code: 20102, Message: "The user was not found."}
-	ErrTokenInvalid      = &Errno{Code: 20103, Message: "The token was invalid."}
-	ErrPasswordIncorrect = &Errno{Code: 20104, Message: "The password was incorrect."}
+	ErrTokenInvalid       = &Errno{Code: 20101, Message: "The token was invalid."}
+	ErrAuthInvalid        = &Errno{Code: 20102, Message: "Permission validation failed."}
+	ErrUserNameOrPassword = &Errno{Code: 20103, Message: "用户名或密码错误"}
+	UserFreeze            = &Errno{Code: 20104, Message: "用户账号已被冻结"}
 )
