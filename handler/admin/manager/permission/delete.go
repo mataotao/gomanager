@@ -6,10 +6,6 @@ import (
 	"apiserver/pkg/errno"
 	"github.com/gin-gonic/gin"
 	"github.com/lexkong/log"
-<<<<<<< HEAD
-	"github.com/lexkong/log/lager"
-=======
->>>>>>> 937b3a9ca74cb2958e2ed35828a9b73ebf6808bf
 	"strconv"
 )
 

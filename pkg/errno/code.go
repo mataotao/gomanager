@@ -16,7 +16,7 @@ var (
 	ErrAuthInvalid        = &Errno{Code: 20102, Message: "权限无效"}
 	ErrUserNameOrPassword = &Errno{Code: 20103, Message: "用户名或密码错误"}
 	UserFreeze            = &Errno{Code: 20104, Message: "用户账号已被冻结"}
-	UserNameNotUnique            = &Errno{Code: 20104, Message: "用户名已存在"}
+	UserNameNotUnique     = &Errno{Code: 20104, Message: "用户名已存在"}
 	//permission errors
 	//ERR            = &Errno{Code: 20201, Message: "用户账号已被冻结"}
 )

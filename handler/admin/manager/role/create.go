@@ -3,12 +3,8 @@ package role
 import (
 	"apiserver/handler"
 	"apiserver/model/admin/managerModel"
-<<<<<<< HEAD
-	"apiserver/util"
-=======
 	"apiserver/pkg/errno"
 	"encoding/json"
->>>>>>> 937b3a9ca74cb2958e2ed35828a9b73ebf6808bf
 	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/lexkong/log"

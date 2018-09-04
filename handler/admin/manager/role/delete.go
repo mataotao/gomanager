@@ -3,10 +3,7 @@ package role
 import (
 	"apiserver/handler"
 	"apiserver/model/admin/managerModel"
-<<<<<<< HEAD
-=======
 	"apiserver/pkg/errno"
->>>>>>> 937b3a9ca74cb2958e2ed35828a9b73ebf6808bf
 	"github.com/gin-gonic/gin"
 	"github.com/lexkong/log"
 	"strconv"

@@ -3,20 +3,11 @@ package permission
 import (
 	"apiserver/handler"
 	"apiserver/model/admin/managerModel"
-<<<<<<< HEAD
-	"apiserver/requests/admin/manager/permissionRequests"
-	"apiserver/util"
-	"github.com/asaskevich/govalidator"
-	"github.com/gin-gonic/gin"
-	"github.com/lexkong/log"
-	"github.com/lexkong/log/lager"
-=======
 	"apiserver/pkg/errno"
 	"encoding/json"
 	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/lexkong/log"
->>>>>>> 937b3a9ca74cb2958e2ed35828a9b73ebf6808bf
 	"strconv"
 )
 

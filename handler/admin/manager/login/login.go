@@ -6,7 +6,6 @@ import (
 	"apiserver/service/admin/manager/loginService"
 	"github.com/gin-gonic/gin"
 	"github.com/lexkong/log"
-
 )
 
 func Login(c *gin.Context) {

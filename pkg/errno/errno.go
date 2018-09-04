@@ -36,7 +36,6 @@ func (err *Err) Error() string {
 	return fmt.Sprintf("Err - code: %d, message: %s, error: %s", err.Code, err.Message, err.Err)
 }
 
-
 func DecodeErr(err error) (int, string) {
 	if err == nil {
 		return OK.Code, OK.Message
