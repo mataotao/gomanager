@@ -3,21 +3,21 @@ package role
 import (
 	"apiserver/handler"
 	"apiserver/model/admin/managerModel"
-	"apiserver/util"
+	"apiserver/pkg/errno"
+	"encoding/json"
 	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/lexkong/log"
-	"github.com/lexkong/log/lager"
 )
 
 func Create(c *gin.Context) {
 	var r CreateRequest
 	if err := c.Bind(&r); err != nil {
-		handler.SendResponse(c, err, nil)
+		handler.SendResponse(c, errno.Error, nil)
 		return
 	}
 	if _, err := govalidator.ValidateStruct(&r); err != nil {
-		handler.SendResponse(c, err, nil)
+		handler.SendResponse(c, errno.ErrValidation, nil)
 		return
 	}
 	role := managerModel.RoleModel{
@@ -25,11 +25,13 @@ func Create(c *gin.Context) {
 		Description: r.Description,
 	}
 	if err := role.Create(r.Permission); err != nil {
-		handler.SendResponse(c, err, nil)
+		log.Error("role create", err)
+		handler.SendResponse(c, errno.Error, nil)
 		return
 	}
 	//写入日志
-	log.Info("创建角色", lager.Data{"X-Request-Id": util.GetReqID(c)})
+	rd, _ := json.Marshal(r)
+	log.Infof("创建角色%s", rd)
 	handler.SendResponse(c, nil, nil)
 }
 

@@ -3,7 +3,9 @@ package condition
 import (
 	"apiserver/handler"
 	"apiserver/model/admin/managerModel"
+	"apiserver/pkg/errno"
 	"github.com/gin-gonic/gin"
+	"github.com/lexkong/log"
 	"reflect"
 	"strconv"
 	"sync"
@@ -12,7 +14,8 @@ import (
 func Condition(c *gin.Context) {
 	var r Conditions
 	if err := c.Bind(&r); err != nil {
-		handler.SendResponse(c, err, nil)
+		handler.SendResponse(c, errno.Error, nil)
+		return
 	}
 
 	conds := GetFieldName(r)
@@ -52,6 +55,7 @@ func Condition(c *gin.Context) {
 	select {
 	case <-finished:
 	case err := <-errChan:
+		log.Error("condition", err)
 		handler.SendResponse(c, err, res)
 		return
 

@@ -13,8 +13,9 @@ import (
 
 func Update(c *gin.Context) {
 
+	id := c.Param("id")
 	//获取id 并转化类型
-	permissionId, _ := strconv.Atoi(c.Param("id"))
+	permissionId, _ := strconv.Atoi(id)
 	//定义要获取字段的类型
 	var updateRequest UpdateRequest
 
@@ -45,6 +46,6 @@ func Update(c *gin.Context) {
 		return
 	}
 	ud, _ := json.Marshal(&updateRequest)
-	log.Infof("更新权限成功,更新的数据为%s", ud)
+	log.Infof("更新权限成功,id为%s数据为%s", id, ud)
 	handler.SendResponse(c, nil, nil)
 }
