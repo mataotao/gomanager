@@ -1,0 +1,4 @@
+2018-09-04 13:49:28.214 INFO apiserver/main.go:91 Start to listening the incoming requests on http address: :8080
+2018-09-04 13:49:28.214 INFO apiserver/main.go:86 Start to listening the incoming requests on https address: :8081
+2018-09-04 13:49:28.215 INFO apiserver/main.go:105 Waiting for the router, retry in 1 second.
+2018-09-04 13:49:29.218 INFO apiserver/main.go:78 The router has been deployed successfully.
