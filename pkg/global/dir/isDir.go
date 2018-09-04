@@ -3,9 +3,9 @@ package dir
 import "os"
 
 /**
-	path 路径
-	create 如果为true 不存在则创建
- */
+path 路径
+create 如果为true 不存在则创建
+*/
 func IsDir(path string, create bool) (bool, error) {
 	_, err := os.Stat(path)
 	if err != nil {
@@ -19,7 +19,6 @@ func IsDir(path string, create bool) (bool, error) {
 		}
 		return false, nil
 	}
-
 
 	return false, err
 }

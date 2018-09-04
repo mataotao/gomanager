@@ -5,7 +5,6 @@ import (
 	"apiserver/pkg/global/auth"
 )
 
-
 func PermissionList(uid uint64) ([]managerModel.PermissionListInfo, error) {
 	//查询数据库
 	permissionList, err := managerModel.ListPermission()
@@ -13,13 +12,13 @@ func PermissionList(uid uint64) ([]managerModel.PermissionListInfo, error) {
 		return nil, err
 	}
 
-	infos := tree(0, permissionList,uid)
+	infos := tree(0, permissionList, uid)
 
 	return infos, nil
 }
 
 //递归实现
-func tree(pid uint64, permissionList []*managerModel.PermissionModel,uid uint64) []managerModel.PermissionListInfo {
+func tree(pid uint64, permissionList []*managerModel.PermissionModel, uid uint64) []managerModel.PermissionListInfo {
 	var arr []managerModel.PermissionListInfo
 	for _, v := range permissionList {
 		if auth.Permission(v.Id, uid) == false {
@@ -34,7 +33,7 @@ func tree(pid uint64, permissionList []*managerModel.PermissionModel,uid uint64)
 			pTree.Url = v.Url
 			pTree.Level = v.Level
 			pTree.Sort = v.Sort
-			subTree := tree(v.Id, permissionList,uid)
+			subTree := tree(v.Id, permissionList, uid)
 			pTree.Children = subTree
 			arr = append(arr, pTree)
 		}

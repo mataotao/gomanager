@@ -3,10 +3,10 @@ package user
 import (
 	"apiserver/handler"
 	"apiserver/model/admin/managerModel"
-	"github.com/gin-gonic/gin"
-	"github.com/asaskevich/govalidator"
-	"time"
 	"errors"
+	"github.com/asaskevich/govalidator"
+	"github.com/gin-gonic/gin"
+	"time"
 )
 
 func Create(c *gin.Context) {

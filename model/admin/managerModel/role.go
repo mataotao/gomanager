@@ -1,13 +1,13 @@
 package managerModel
 
 import (
-	"github.com/spf13/viper"
 	"apiserver/model"
-	"bytes"
-	"strconv"
-	globalModel "apiserver/pkg/global/model"
 	"apiserver/pkg/constvar"
+	globalModel "apiserver/pkg/global/model"
+	"bytes"
 	"fmt"
+	"github.com/spf13/viper"
+	"strconv"
 	"sync"
 )
 

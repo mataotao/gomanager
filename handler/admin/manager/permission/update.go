@@ -1,14 +1,14 @@
 package permission
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/lexkong/log"
-	"github.com/lexkong/log/lager"
-	"github.com/asaskevich/govalidator"
+	"apiserver/handler"
 	"apiserver/model/admin/managerModel"
 	"apiserver/requests/admin/manager/permissionRequests"
 	"apiserver/util"
-	"apiserver/handler"
+	"github.com/asaskevich/govalidator"
+	"github.com/gin-gonic/gin"
+	"github.com/lexkong/log"
+	"github.com/lexkong/log/lager"
 	"strconv"
 )
 

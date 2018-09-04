@@ -3,8 +3,8 @@ package user
 import (
 	"apiserver/handler"
 	"apiserver/model/admin/managerModel"
-	"github.com/gin-gonic/gin"
 	"github.com/asaskevich/govalidator"
+	"github.com/gin-gonic/gin"
 	"strconv"
 )
 
