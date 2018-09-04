@@ -1,4 +1,4 @@
-package permissionRequests
+package permission
 
 import (
 	"time"

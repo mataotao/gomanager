@@ -2,7 +2,6 @@ package managerModel
 
 import (
 	"apiserver/model"
-	"apiserver/requests/admin/manager/permissionRequests"
 	"github.com/spf13/viper"
 	validator "gopkg.in/go-playground/validator.v9"
 )
@@ -49,8 +48,16 @@ func (p *PermissionModel) UpdateAll() error {
 }
 
 //修改指定字段
-func (p *PermissionModel) Update(data *permissionRequests.UpdateRequest) error {
-	return model.DB.Self.Model(p).Updates(data).Error
+func (p *PermissionModel) Update() error {
+	d := map[string]interface{}{
+		"label":           p.Label,
+		"sort":            p.Sort,
+		"is_contain_menu": p.IsContainMenu,
+		"url":             p.Url,
+		"cond":            p.Cond,
+		"icon":            p.Icon,
+	}
+	return model.DB.Self.Model(p).Updates(d).Error
 }
 
 //查询一条数据

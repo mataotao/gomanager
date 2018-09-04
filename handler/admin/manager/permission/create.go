@@ -3,7 +3,6 @@ package permission
 import (
 	"apiserver/handler"
 	"apiserver/model/admin/managerModel"
-	"apiserver/requests/admin/manager/permissionRequests"
 	"apiserver/util"
 	"github.com/gin-gonic/gin"
 	"github.com/lexkong/log"
@@ -14,7 +13,7 @@ func Create(c *gin.Context) {
 	//写入日志
 	log.Info("调用创建用户", lager.Data{"X-Request-Id": util.GetReqID(c)})
 	//声明 CreateRequest类型的变量
-	var request permissionRequests.CreateRequest
+	var request CreateRequest
 
 	//url获取并赋值
 	if err := c.Bind(&request); err != nil {
@@ -45,7 +44,7 @@ func Create(c *gin.Context) {
 	}
 	log.Info("创建用户成功", lager.Data{"X-Request-Id": util.GetReqID(c)})
 	//返回定义好的消息
-	rsp := permissionRequests.CreateResponse{request.Label}
+	rsp := CreateResponse{request.Label}
 
 	handler.SendResponse(c, nil, rsp)
 
