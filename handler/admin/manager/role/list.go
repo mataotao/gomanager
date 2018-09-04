@@ -3,27 +3,30 @@ package role
 import (
 	"apiserver/handler"
 	"apiserver/model/admin/managerModel"
+	"apiserver/pkg/errno"
 	"apiserver/service/admin/manager/roleService"
 	"github.com/gin-gonic/gin"
+	"github.com/lexkong/log"
 )
 
 func List(c *gin.Context) {
 	var r listRequest
 
 	if err := c.Bind(&r); err != nil {
-		handler.SendResponse(c, err, nil)
+		handler.SendResponse(c, errno.Error, nil)
 		return
 	}
 
 	list, count, err := roleService.List(r.Name, r.Page, r.Limit)
 
 	if err != nil {
-		handler.SendResponse(c, err, nil)
+		log.Error("role list", err)
+		handler.SendResponse(c, errno.Error, nil)
 		return
 	}
 	res := listResponse{count, list}
 
-	handler.SendResponse(c, err, res)
+	handler.SendResponse(c, nil, res)
 }
 
 type listRequest struct {

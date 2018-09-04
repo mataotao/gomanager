@@ -1,0 +1,189 @@
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /debug/pprof/             --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/cmdline      --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/profile      --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] POST   /debug/pprof/symbol       --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/symbol       --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/trace        --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/block        --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/goroutine    --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/heap         --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/mutex        --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/threadcreate --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] POST   /login                    --> apiserver/handler/admin/manager/login.Login (7 handlers)
+[GIN-debug] GET    /admin/condition          --> apiserver/handler/admin/manager/condition.Condition (7 handlers)
+[GIN-debug] GET    /admin/menu               --> apiserver/handler/admin/manager/permission.Menu (7 handlers)
+[GIN-debug] GET    /admin/manager/current-user --> apiserver/handler/admin/manager/user.Current (7 handlers)
+[GIN-debug] POST   /admin/manager/permission --> apiserver/handler/admin/manager/permission.Create (8 handlers)
+[GIN-debug] DELETE /admin/manager/permission/:id --> apiserver/handler/admin/manager/permission.Delete (8 handlers)
+[GIN-debug] PUT    /admin/manager/permission/:id --> apiserver/handler/admin/manager/permission.Update (8 handlers)
+[GIN-debug] GET    /admin/manager/permission/:id --> apiserver/handler/admin/manager/permission.Get (8 handlers)
+[GIN-debug] GET    /admin/manager/permission --> apiserver/handler/admin/manager/permission.List (8 handlers)
+[GIN-debug] POST   /admin/manager/role       --> apiserver/handler/admin/manager/role.Create (8 handlers)
+[GIN-debug] DELETE /admin/manager/role/:id   --> apiserver/handler/admin/manager/role.Delete (8 handlers)
+[GIN-debug] PUT    /admin/manager/role/:id   --> apiserver/handler/admin/manager/role.Update (8 handlers)
+[GIN-debug] GET    /admin/manager/role/:id   --> apiserver/handler/admin/manager/role.Get (8 handlers)
+[GIN-debug] GET    /admin/manager/role       --> apiserver/handler/admin/manager/role.List (8 handlers)
+[GIN-debug] POST   /admin/manager/user       --> apiserver/handler/admin/manager/user.Create (8 handlers)
+[GIN-debug] PUT    /admin/manager/user-freeze/:id --> apiserver/handler/admin/manager/user.Freeze (8 handlers)
+[GIN-debug] PUT    /admin/manager/user-pwd/:id --> apiserver/handler/admin/manager/user.Pwd (8 handlers)
+[GIN-debug] PUT    /admin/manager/user/:id   --> apiserver/handler/admin/manager/user.Update (8 handlers)
+[GIN-debug] GET    /admin/manager/user/:id   --> apiserver/handler/admin/manager/user.Get (8 handlers)
+[GIN-debug] GET    /admin/manager/user       --> apiserver/handler/admin/manager/user.List (8 handlers)
+[GIN-debug] POST   /globals/uploads          --> apiserver/handler/global.Uploads (7 handlers)
+[GIN-debug] GET    /globals/caches           --> apiserver/handler/global.Cache (7 handlers)
+[GIN-debug] GET    /sd/health                --> apiserver/handler/sd.HealthCheck (7 handlers)
+[GIN-debug] GET    /sd/disk                  --> apiserver/handler/sd.DiskCheck (7 handlers)
+[GIN-debug] GET    /sd/cpu                   --> apiserver/handler/sd.CPUCheck (7 handlers)
+[GIN-debug] GET    /sd/ram                   --> apiserver/handler/sd.RAMCheck (7 handlers)
+2018-09-03 03:13:10.406 INFO apiserver/main.go:91 Start to listening the incoming requests on http address: :8080
+2018-09-03 03:13:10.408 INFO apiserver/main.go:86 Start to listening the incoming requests on https address: :8081
+2018-09-03 03:13:10.410 INFO apiserver/main.go:78 The router has been deployed successfully.
+2018-09-03 03:13:10.420 [0;31mERROR[0m log/logrotate.go:227 LogRotate catch an exception
+2018-09-03 03:13:48.673 INFO middleware/logging.go:84 86.570681ms   | 172.18.0.1   | POST /login | {code: 0, message: OK}
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /debug/pprof/             --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/cmdline      --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/profile      --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] POST   /debug/pprof/symbol       --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/symbol       --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/trace        --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/block        --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/goroutine    --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/heap         --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/mutex        --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/threadcreate --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] POST   /login                    --> apiserver/handler/admin/manager/login.Login (7 handlers)
+[GIN-debug] GET    /admin/condition          --> apiserver/handler/admin/manager/condition.Condition (7 handlers)
+[GIN-debug] GET    /admin/menu               --> apiserver/handler/admin/manager/permission.Menu (7 handlers)
+[GIN-debug] GET    /admin/manager/current-user --> apiserver/handler/admin/manager/user.Current (7 handlers)
+[GIN-debug] POST   /admin/manager/permission --> apiserver/handler/admin/manager/permission.Create (8 handlers)
+[GIN-debug] DELETE /admin/manager/permission/:id --> apiserver/handler/admin/manager/permission.Delete (8 handlers)
+[GIN-debug] PUT    /admin/manager/permission/:id --> apiserver/handler/admin/manager/permission.Update (8 handlers)
+[GIN-debug] GET    /admin/manager/permission/:id --> apiserver/handler/admin/manager/permission.Get (8 handlers)
+[GIN-debug] GET    /admin/manager/permission --> apiserver/handler/admin/manager/permission.List (8 handlers)
+[GIN-debug] POST   /admin/manager/role       --> apiserver/handler/admin/manager/role.Create (8 handlers)
+[GIN-debug] DELETE /admin/manager/role/:id   --> apiserver/handler/admin/manager/role.Delete (8 handlers)
+[GIN-debug] PUT    /admin/manager/role/:id   --> apiserver/handler/admin/manager/role.Update (8 handlers)
+[GIN-debug] GET    /admin/manager/role/:id   --> apiserver/handler/admin/manager/role.Get (8 handlers)
+[GIN-debug] GET    /admin/manager/role       --> apiserver/handler/admin/manager/role.List (8 handlers)
+[GIN-debug] POST   /admin/manager/user       --> apiserver/handler/admin/manager/user.Create (8 handlers)
+[GIN-debug] PUT    /admin/manager/user-freeze/:id --> apiserver/handler/admin/manager/user.Freeze (8 handlers)
+[GIN-debug] PUT    /admin/manager/user-pwd/:id --> apiserver/handler/admin/manager/user.Pwd (8 handlers)
+[GIN-debug] PUT    /admin/manager/user/:id   --> apiserver/handler/admin/manager/user.Update (8 handlers)
+[GIN-debug] GET    /admin/manager/user/:id   --> apiserver/handler/admin/manager/user.Get (8 handlers)
+[GIN-debug] GET    /admin/manager/user       --> apiserver/handler/admin/manager/user.List (8 handlers)
+[GIN-debug] POST   /globals/uploads          --> apiserver/handler/global.Uploads (7 handlers)
+[GIN-debug] GET    /globals/caches           --> apiserver/handler/global.Cache (7 handlers)
+[GIN-debug] GET    /sd/health                --> apiserver/handler/sd.HealthCheck (7 handlers)
+[GIN-debug] GET    /sd/disk                  --> apiserver/handler/sd.DiskCheck (7 handlers)
+[GIN-debug] GET    /sd/cpu                   --> apiserver/handler/sd.CPUCheck (7 handlers)
+[GIN-debug] GET    /sd/ram                   --> apiserver/handler/sd.RAMCheck (7 handlers)
+2018-09-03 04:16:17.813 INFO apiserver/main.go:91 Start to listening the incoming requests on http address: :8080
+2018-09-03 04:16:17.813 INFO apiserver/main.go:86 Start to listening the incoming requests on https address: :8081
+2018-09-03 04:16:17.814 INFO apiserver/main.go:78 The router has been deployed successfully.
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /debug/pprof/             --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/cmdline      --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/profile      --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] POST   /debug/pprof/symbol       --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/symbol       --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/trace        --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/block        --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/goroutine    --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/heap         --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/mutex        --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/threadcreate --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] POST   /login                    --> apiserver/handler/admin/manager/login.Login (7 handlers)
+[GIN-debug] GET    /admin/condition          --> apiserver/handler/admin/manager/condition.Condition (7 handlers)
+[GIN-debug] GET    /admin/menu               --> apiserver/handler/admin/manager/permission.Menu (7 handlers)
+[GIN-debug] GET    /admin/manager/current-user --> apiserver/handler/admin/manager/user.Current (7 handlers)
+[GIN-debug] POST   /admin/manager/permission --> apiserver/handler/admin/manager/permission.Create (8 handlers)
+[GIN-debug] DELETE /admin/manager/permission/:id --> apiserver/handler/admin/manager/permission.Delete (8 handlers)
+[GIN-debug] PUT    /admin/manager/permission/:id --> apiserver/handler/admin/manager/permission.Update (8 handlers)
+[GIN-debug] GET    /admin/manager/permission/:id --> apiserver/handler/admin/manager/permission.Get (8 handlers)
+[GIN-debug] GET    /admin/manager/permission --> apiserver/handler/admin/manager/permission.List (8 handlers)
+[GIN-debug] POST   /admin/manager/role       --> apiserver/handler/admin/manager/role.Create (8 handlers)
+[GIN-debug] DELETE /admin/manager/role/:id   --> apiserver/handler/admin/manager/role.Delete (8 handlers)
+[GIN-debug] PUT    /admin/manager/role/:id   --> apiserver/handler/admin/manager/role.Update (8 handlers)
+[GIN-debug] GET    /admin/manager/role/:id   --> apiserver/handler/admin/manager/role.Get (8 handlers)
+[GIN-debug] GET    /admin/manager/role       --> apiserver/handler/admin/manager/role.List (8 handlers)
+[GIN-debug] POST   /admin/manager/user       --> apiserver/handler/admin/manager/user.Create (8 handlers)
+[GIN-debug] PUT    /admin/manager/user-freeze/:id --> apiserver/handler/admin/manager/user.Freeze (8 handlers)
+[GIN-debug] PUT    /admin/manager/user-pwd/:id --> apiserver/handler/admin/manager/user.Pwd (8 handlers)
+[GIN-debug] PUT    /admin/manager/user/:id   --> apiserver/handler/admin/manager/user.Update (8 handlers)
+[GIN-debug] GET    /admin/manager/user/:id   --> apiserver/handler/admin/manager/user.Get (8 handlers)
+[GIN-debug] GET    /admin/manager/user       --> apiserver/handler/admin/manager/user.List (8 handlers)
+[GIN-debug] POST   /globals/uploads          --> apiserver/handler/global.Uploads (7 handlers)
+[GIN-debug] GET    /globals/caches           --> apiserver/handler/global.Cache (7 handlers)
+[GIN-debug] GET    /sd/health                --> apiserver/handler/sd.HealthCheck (7 handlers)
+[GIN-debug] GET    /sd/disk                  --> apiserver/handler/sd.DiskCheck (7 handlers)
+[GIN-debug] GET    /sd/cpu                   --> apiserver/handler/sd.CPUCheck (7 handlers)
+[GIN-debug] GET    /sd/ram                   --> apiserver/handler/sd.RAMCheck (7 handlers)
+2018-09-03 04:39:46.009 INFO apiserver/main.go:91 Start to listening the incoming requests on http address: :8080
+2018-09-03 04:39:46.009 INFO apiserver/main.go:86 Start to listening the incoming requests on https address: :8081
+2018-09-03 04:39:46.010 INFO apiserver/main.go:78 The router has been deployed successfully.
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /debug/pprof/             --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/cmdline      --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/profile      --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] POST   /debug/pprof/symbol       --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/symbol       --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/trace        --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/block        --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/goroutine    --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/heap         --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/mutex        --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] GET    /debug/pprof/threadcreate --> apiserver/vendor/github.com/gin-contrib/pprof.pprofHandler.func1 (7 handlers)
+[GIN-debug] POST   /login                    --> apiserver/handler/admin/manager/login.Login (7 handlers)
+[GIN-debug] GET    /admin/condition          --> apiserver/handler/admin/manager/condition.Condition (7 handlers)
+[GIN-debug] GET    /admin/menu               --> apiserver/handler/admin/manager/permission.Menu (7 handlers)
+[GIN-debug] GET    /admin/manager/current-user --> apiserver/handler/admin/manager/user.Current (7 handlers)
+[GIN-debug] POST   /admin/manager/permission --> apiserver/handler/admin/manager/permission.Create (8 handlers)
+[GIN-debug] DELETE /admin/manager/permission/:id --> apiserver/handler/admin/manager/permission.Delete (8 handlers)
+[GIN-debug] PUT    /admin/manager/permission/:id --> apiserver/handler/admin/manager/permission.Update (8 handlers)
+[GIN-debug] GET    /admin/manager/permission/:id --> apiserver/handler/admin/manager/permission.Get (8 handlers)
+[GIN-debug] GET    /admin/manager/permission --> apiserver/handler/admin/manager/permission.List (8 handlers)
+[GIN-debug] POST   /admin/manager/role       --> apiserver/handler/admin/manager/role.Create (8 handlers)
+[GIN-debug] DELETE /admin/manager/role/:id   --> apiserver/handler/admin/manager/role.Delete (8 handlers)
+[GIN-debug] PUT    /admin/manager/role/:id   --> apiserver/handler/admin/manager/role.Update (8 handlers)
+[GIN-debug] GET    /admin/manager/role/:id   --> apiserver/handler/admin/manager/role.Get (8 handlers)
+[GIN-debug] GET    /admin/manager/role       --> apiserver/handler/admin/manager/role.List (8 handlers)
+[GIN-debug] POST   /admin/manager/user       --> apiserver/handler/admin/manager/user.Create (8 handlers)
+[GIN-debug] PUT    /admin/manager/user-freeze/:id --> apiserver/handler/admin/manager/user.Freeze (8 handlers)
+[GIN-debug] PUT    /admin/manager/user-pwd/:id --> apiserver/handler/admin/manager/user.Pwd (8 handlers)
+[GIN-debug] PUT    /admin/manager/user/:id   --> apiserver/handler/admin/manager/user.Update (8 handlers)
+[GIN-debug] GET    /admin/manager/user/:id   --> apiserver/handler/admin/manager/user.Get (8 handlers)
+[GIN-debug] GET    /admin/manager/user       --> apiserver/handler/admin/manager/user.List (8 handlers)
+[GIN-debug] POST   /globals/uploads          --> apiserver/handler/global.Uploads (7 handlers)
+[GIN-debug] GET    /globals/caches           --> apiserver/handler/global.Cache (7 handlers)
+[GIN-debug] GET    /sd/health                --> apiserver/handler/sd.HealthCheck (7 handlers)
+[GIN-debug] GET    /sd/disk                  --> apiserver/handler/sd.DiskCheck (7 handlers)
+[GIN-debug] GET    /sd/cpu                   --> apiserver/handler/sd.CPUCheck (7 handlers)
+[GIN-debug] GET    /sd/ram                   --> apiserver/handler/sd.RAMCheck (7 handlers)
+2018-09-03 04:41:36.993 INFO apiserver/main.go:91 Start to listening the incoming requests on http address: :8080
+2018-09-03 04:41:36.993 INFO apiserver/main.go:86 Start to listening the incoming requests on https address: :8081
+2018-09-03 04:41:36.994 INFO apiserver/main.go:78 The router has been deployed successfully.
+2018-09-03 04:45:14.443 INFO middleware/logging.go:84 225.168577ms  | 125.70.76.38 | POST /login | {code: 0, message: OK}
+2018-09-03 04:45:50.188 INFO role/create.go:32 创建角色
+2018-09-03 04:48:15.292 INFO middleware/logging.go:84 91.209213ms   | 125.70.76.38 | POST /login | {code: 0, message: OK}
+2018-09-03 04:49:11.873 INFO middleware/logging.go:84 89.456143ms   | 125.70.76.38 | POST /login | {code: 0, message: OK}
+2018-09-03 04:53:14.811 INFO middleware/logging.go:84 91.712297ms   | 125.70.76.38 | POST /login | {code: 0, message: OK}
+2018-09-03 05:39:00.390 INFO middleware/logging.go:84 94.986319ms   | 218.88.124.241 | POST /login | {code: 0, message: OK}
+2018-09-03 16:40:29.989 [0;31mERROR[0m middleware/logging.go:76 response body can not unmarshal to model.Response struct, body: `` error: unexpected end of JSON input
+2018-09-03 16:40:29.989 INFO middleware/logging.go:84 141.643µs     | 67.209.121.15 | GET /login.cgi | {code: 10001, message: unexpected end of JSON input}
+2018-09-04 02:36:55.560 INFO middleware/logging.go:84 90.829008ms   | 125.70.76.38 | POST /login | {code: 0, message: OK}
+2018-09-04 08:24:10.166 [0;31mERROR[0m middleware/logging.go:76 response body can not unmarshal to model.Response struct, body: `{"code":10001,"message":"record not found","data":null}{"code":0,"message":"OK","data":null}` error: invalid character '{' after top-level value
+2018-09-04 08:24:10.166 INFO middleware/logging.go:84 869.432µs     | 182.150.27.130 | POST /login | {code: 10001, message: invalid character '{' after top-level value}
