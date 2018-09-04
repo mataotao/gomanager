@@ -13,7 +13,7 @@ import (
 	"apiserver/model"
 	v "apiserver/pkg/version"
 	"apiserver/router"
-	"apiserver/router/middleware"
+	//"apiserver/router/middleware"
 
 	"apiserver/pkg/global/redis"
 	"github.com/gin-gonic/gin"
@@ -66,7 +66,7 @@ func main() {
 		g,
 
 		// Middlwares.
-		middleware.Logging(),
+		//middleware.Logging(),//
 		//middleware.RequestId(),
 	)
 

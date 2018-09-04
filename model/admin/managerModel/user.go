@@ -230,16 +230,17 @@ type userInfo struct {
 }
 
 type UserListInfo struct {
-	Id       uint64 `json:"id"`
-	Username string `json:"username"`
-	Name     string `json:"name"`
-	Mobile   uint64 `json:"mobile"`
-	HeadImg  string `json:"head_img"`
-	LastTime string `json:"last_time"`
-	LastIp   string `json:"last_ip"`
-	IsRoot   uint8  `json:"is_root"`
-	Status   uint8  `json:"status"`
-	RoleName string `json:"role_name"`
+	Id         uint64 `json:"id"`
+	Username   string `json:"username"`
+	Name       string `json:"name"`
+	Mobile     uint64 `json:"mobile"`
+	HeadImg    string `json:"head_img"`
+	LastTime   string `json:"last_time"`
+	LastIp     string `json:"last_ip"`
+	IsRoot     uint8  `json:"is_root"`
+	Status     uint8  `json:"status"`
+	StatusName string `json:"status_name"`
+	RoleName   string `json:"role_name"`
 }
 
 type LoginInfo struct {

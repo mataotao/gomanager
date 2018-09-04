@@ -63,17 +63,22 @@ func List(cond map[string]interface{}) (*ListResponse, error) {
 			}
 			userList.Lock.Lock()
 			defer userList.Lock.Unlock()
+			statusName := "正常"
+			if u.Status == managerModel.FREEZE {
+				statusName = "冻结"
+			}
 			userList.IdMap[u.Id] = &managerModel.UserListInfo{
-				Id:       u.Id,
-				Username: u.Username,
-				Name:     u.Name,
-				Mobile:   u.Mobile,
-				HeadImg:  u.HeadImg,
-				LastTime: u.LastTime.Format("2006-01-02 15:04:05"),
-				LastIp:   u.LastIp,
-				IsRoot:   u.IsRoot,
-				Status:   u.Status,
-				RoleName: roleNames.String(),
+				Id:         u.Id,
+				Username:   u.Username,
+				Name:       u.Name,
+				Mobile:     u.Mobile,
+				HeadImg:    u.HeadImg,
+				LastTime:   u.LastTime.Format("2006-01-02 15:04:05"),
+				LastIp:     u.LastIp,
+				IsRoot:     u.IsRoot,
+				Status:     u.Status,
+				StatusName: statusName,
+				RoleName:   roleNames.String(),
 			}
 		}(v)
 	}
