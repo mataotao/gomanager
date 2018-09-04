@@ -30,7 +30,7 @@ func Create(c *gin.Context) {
 		return
 	}
 	//写入日志
-	rd, _ := json.Marshal(r)
+	rd, _ := json.Marshal(&r)
 	log.Infof("创建角色%s", rd)
 	handler.SendResponse(c, nil, nil)
 }

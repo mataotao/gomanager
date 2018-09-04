@@ -26,7 +26,7 @@ func Update(c *gin.Context) {
 		handler.SendResponse(c, errno.Error, nil)
 		return
 	}
-	rd, _ := json.Marshal(r)
+	rd, _ := json.Marshal(&r)
 	log.Infof("更新角色 id为%s数据为%s", id, rd)
 	handler.SendResponse(c, nil, nil)
 
