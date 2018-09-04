@@ -5,6 +5,7 @@ import (
 	"apiserver/pkg/auth"
 	"apiserver/pkg/constvar"
 	globalModel "apiserver/pkg/global/model"
+	"fmt"
 	"github.com/spf13/viper"
 	"sync"
 	"time"
@@ -151,10 +152,10 @@ func (u *UserModel) List(page, limit, roleId uint64) ([]*UserModel, map[uint64][
 
 	DB := model.DB.Self.Table(u.TableName())
 	if u.Name != "" {
-		DB = DB.Where("name = ?", u.Name)
+		DB = DB.Where("name LIKE ?", fmt.Sprintf("%%%s%%", u.Name))
 	}
 	if u.Username != "" {
-		DB = DB.Where("username = ?", u.Username)
+		DB = DB.Where("username LIKE ?", fmt.Sprintf("%%%s%%", u.Username))
 	}
 	if u.Status != 0 {
 		DB = DB.Where("status = ?", u.Status)
