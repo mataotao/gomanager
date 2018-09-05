@@ -1,13 +1,3 @@
-2018-09-04 14:16:25.980 INFO apiserver/main.go:105 Waiting for the router, retry in 1 second.
-2018-09-04 14:16:26.983 INFO apiserver/main.go:78 The router has been deployed successfully.
-2018-09-04 14:17:39.384 INFO login/login.go:22 111登录成功
-2018-09-04 14:17:58.360 INFO middleware/auth.go:30 用户111调用apiserver/handler/admin/manager/role.List
-2018-09-04 14:17:58.360 INFO middleware/auth.go:30 用户111调用apiserver/handler/admin/manager/permission.List
-2018-09-04 14:17:59.480 INFO middleware/auth.go:30 用户111调用apiserver/handler/admin/manager/user.List
-2018-09-04 14:18:23.686 INFO middleware/auth.go:30 用户111调用apiserver/handler/admin/manager/role.List
-2018-09-04 14:18:23.687 INFO middleware/auth.go:30 用户111调用apiserver/handler/admin/manager/permission.List
-2018-09-04 14:18:24.553 INFO middleware/auth.go:30 用户111调用apiserver/handler/admin/manager/permission.List
-2018-09-04 14:19:25.766 INFO middleware/auth.go:30 用户111调用apiserver/handler/admin/manager/role.List
-2018-09-04 14:19:25.768 INFO middleware/auth.go:30 用户111调用apiserver/handler/admin/manager/permission.List
-2018-09-04 14:19:31.835 INFO middleware/auth.go:30 用户111调用apiserver/handler/admin/manager/permission.List
-2018-09-04 14:19:31.835 INFO middleware/auth.go:30 用户111调用apiserver/handler/admin/manager/role.List
+2018-09-05 12:50:39.971 INFO apiserver/main.go:91 Start to listening the incoming requests on http address: :8080
+2018-09-05 12:50:39.972 INFO apiserver/main.go:86 Start to listening the incoming requests on https address: :8081
+2018-09-05 12:50:39.972 INFO apiserver/main.go:78 The router has been deployed successfully.
